@@ -19,7 +19,7 @@ public enum ClassType {
 		this.name = friendlyName;
 	}
 	
-	public String toString(){
+	public String getName(){
 		return this.name;
 	}
 }

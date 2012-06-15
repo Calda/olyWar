@@ -12,7 +12,6 @@ public class Heartbeat {
 					int currentMana = p.getFoodLevel();
 					int newMana = currentMana++;
 					p.setFoodLevel(newMana);
-					System.out.println(p.getName() + "'s mana has been restored");
 			}
 		}
 	}

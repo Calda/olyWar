@@ -1,0 +1,36 @@
+Players need the following to be saved.....
+
+	Current:
+		team: RED/NBLUE
+		ClassType: ClassType.?
+	Records:
+		Records:
+			Total:
+				Kills:
+				Score:
+			Class1:
+				Kills:
+				Score: (Kills + Other Achievements)
+		CurrentScore:
+	Unlocks:
+		Weapons:
+			POWDER_MAGIC: false
+			SWORD_FIRE: false
+			SWORD_MAGIC: false
+		Classes:
+			Tier2Class: true
+			Tier3Class: false
+	WeaponChoice:
+		Assassin:
+			POWDER_MAGIC: true
+			POWDER_POISON: false
+			DAGGER_POISON: false
+			DAGGER_NORMAL: false
+			DAGGER_MAGIC: true
+		Paladin:
+			LONG_SWORD: true
+			MAGIC_SWORD: false
+			FIRE_SWORD: false
+		Ranger:
+			
+		Sorcerer:
