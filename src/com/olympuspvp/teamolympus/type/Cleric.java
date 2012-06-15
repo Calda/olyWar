@@ -9,6 +9,7 @@ import org.bukkit.potion.PotionEffect;
 import com.olympuspvp.teamolympus.Item.*;
 import com.olympuspvp.teamolympus.game.Team;
 
+@Deprecated
 public class Cleric implements Class{
 	private final int maximumHealth = 18;
 	private ClassType type = ClassType.CLERIC;

@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.olympuspvp.teamolympus.Item.*;
 import com.olympuspvp.teamolympus.game.Team;
 
+@Deprecated
 public class Infiltrator implements Class{
 	private final int maximumHealth = 8;
 	private ClassType type = ClassType.INFILTRATOR;

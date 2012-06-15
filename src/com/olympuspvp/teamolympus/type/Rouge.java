@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.olympuspvp.teamolympus.Item.*;
 import com.olympuspvp.teamolympus.game.Team;
 
+@Deprecated
 public class Rouge implements Class{
 	private final int maximumHealth = 10;
 	private ClassType type = ClassType.ROUGE;

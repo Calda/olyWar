@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.olympuspvp.teamolympus.Item.*;
 import com.olympuspvp.teamolympus.game.Team;
 
+@Deprecated
 public class Ranger implements Class{
 	private final int maximumHealth = 14;
 	private ClassType type = ClassType.RANGER;
@@ -33,7 +34,7 @@ public class Ranger implements Class{
 	public List<ItemType> getRespawnInventory(){
 		ItemType[] array = {};
 		List<ItemType> respawnInventory = Arrays.asList(array);
-		respawnInventory.add(ItemType.BOW);
+		respawnInventory.add(ItemType.USER_CHOICE);
 		respawnInventory.add(ItemType.ARROW);
 		respawnInventory.add(ItemType.POTION_HEALTH);
 		respawnInventory.add(ItemType.POTION_HEALTH);

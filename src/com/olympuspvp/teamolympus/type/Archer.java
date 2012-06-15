@@ -10,6 +10,7 @@ import com.olympuspvp.teamolympus.game.Team;
 
 import com.olympuspvp.teamolympus.Item.*;
 
+@Deprecated
 public class Archer implements Class{
 	private final int maximumHealth = 12;
 	private ClassType type = ClassType.ARCHER;

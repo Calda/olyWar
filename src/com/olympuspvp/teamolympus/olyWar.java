@@ -1,31 +1,58 @@
 package com.olympuspvp.teamolympus;
 
 import java.io.File;
-import java.io.InputStream;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.olympuspvp.teamolympus.Heartbeat;
-import com.olympuspvp.teamolympus.type.*;
+
+import com.olympuspvp.teamolympus.Item.InteractionListener;
+import com.olympuspvp.teamolympus.configuration.LoginListener;
+import com.olympuspvp.teamolympus.damage.DamageListener;
 
 public class olyWar extends JavaPlugin{
-	Heartbeat hb;
+	@Override
+	public void onDisable(){}
 	@Override
 	public void onEnable(){
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-
+		InteractionListener IL = new InteractionListener();
+		Bukkit.getServer().getPluginManager().registerEvents(IL, this);
+		DamageListener DL = new DamageListener();
+		Bukkit.getServer().getPluginManager().registerEvents(DL, this);
+		LoginListener LL = new LoginListener();
+		Bukkit.getServer().getPluginManager().registerEvents(LL, this);
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
-				hb.addMana();
+				Player[] players = Bukkit.getOnlinePlayers();
+				if(players != null){
+					if(players.length > 0){
+						for(Player p : players){
+							int mana = p.getFoodLevel();
+							if(mana == 20){
+							}else{
+								mana++;
+								p.setFoodLevel(mana);
+							}
+						}
+					}
+				}else{
+
+				}
 			}
-		}, 30L);
+		}, 30L, 30L);
 	}
+	
 	public boolean onCommand(CommandSender s, Command cc, String cl, String[] args){
 		return true;
+	}
+
+	public static String getLogo(){
+		return ChatColor.BLUE + "[" + ChatColor.YELLOW + "oly" + ChatColor.GOLD + "War" + ChatColor.BLUE + "] ";
 	}
 
 	public static FileConfiguration loadData(Player owner) {
@@ -33,11 +60,8 @@ public class olyWar extends JavaPlugin{
 		FileConfiguration customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
 		String name = customConfig.getString("name");
 		if(name == null){
-			
-			//set all default paths here
-			
+
 		}
 		return customConfig;
 	}
-
 }

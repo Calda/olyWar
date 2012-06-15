@@ -9,6 +9,7 @@ import org.bukkit.potion.PotionEffect;
 import com.olympuspvp.teamolympus.Item.*;
 import com.olympuspvp.teamolympus.game.Team;
 
+@Deprecated
 public class Paladin implements Class{
 	private final int maximumHealth = 12;
 	private ClassType type = ClassType.PALADIN;
@@ -34,7 +35,7 @@ public class Paladin implements Class{
 	public List<ItemType> getRespawnInventory(){
 		ItemType[] array = {};
 		List<ItemType> respawnInventory = Arrays.asList(array);
-		respawnInventory.add(ItemType.SWORD_LONG);
+		respawnInventory.add(ItemType.USER_CHOICE);
 		return respawnInventory;
 	}
 	

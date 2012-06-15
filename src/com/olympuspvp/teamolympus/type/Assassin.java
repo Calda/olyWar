@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.olympuspvp.teamolympus.Item.*;
 import com.olympuspvp.teamolympus.game.Team;
 
+@Deprecated
 public class Assassin implements Class{
 	private final int maximumHealth = 12;
 	private ClassType type = ClassType.ASSASSIN;
@@ -34,7 +35,7 @@ public class Assassin implements Class{
 	public List<ItemType> getRespawnInventory(){
 		ItemType[] array = {};
 		List<ItemType> respawnInventory = Arrays.asList(array);
-		respawnInventory.add(ItemType.DAGGER);
+		respawnInventory.add(ItemType.USER_CHOICE);
 		respawnInventory.add(ItemType.POWDER_POISON);
 		respawnInventory.add(ItemType.POTION_HEALTH);
 		respawnInventory.add(ItemType.POTION_HEALTH);

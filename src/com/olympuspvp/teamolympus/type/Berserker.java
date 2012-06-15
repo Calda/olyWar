@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.olympuspvp.teamolympus.Item.*;
 import com.olympuspvp.teamolympus.game.Team;
 
+@Deprecated
 public class Berserker implements Class{
 	private final int maximumHealth = 10;
 	private ClassType type = ClassType.BERSERKER;
@@ -26,6 +27,7 @@ public class Berserker implements Class{
 		PotionEffect[] array = {};
 		List<PotionEffect> respawnEffects = Arrays.asList(array);
 		respawnEffects.add(new PotionEffect(PotionEffectType.SPEED, 10*60*20, 3));
+		respawnEffects.add(new PotionEffect(PotionEffectType.SLOW_DIGGING, 10*60*20, 3));
 		return respawnEffects;
 	}
 

@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.olympuspvp.teamolympus.Item.*;
 import com.olympuspvp.teamolympus.game.Team;
 
+@Deprecated
 public class Huntsman implements Class{
 	private final int maximumHealth = 14;
 	private ClassType type = ClassType.ROUGE;
