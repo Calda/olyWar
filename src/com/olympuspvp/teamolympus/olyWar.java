@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.olympuspvp.teamolympus.Item.InteractionListener;
+import com.olympuspvp.teamolympus.Item.StaffFireListener;
 import com.olympuspvp.teamolympus.configuration.LoginListener;
 import com.olympuspvp.teamolympus.configuration.WarConfig;
 //import com.olympuspvp.teamolympus.configuration.WarConfig;
@@ -27,6 +28,8 @@ public class olyWar extends JavaPlugin{
 	public void onEnable(){
 		WarConfig.loadConfig();
 		spawn = WarConfig.getSpawn();
+		StaffFireListener SFL = new StaffFireListener();
+		Bukkit.getServer().getPluginManager().registerEvents(SFL, this);
 		InteractionListener IL = new InteractionListener();
 		Bukkit.getServer().getPluginManager().registerEvents(IL, this);
 		DamageListener DL = new DamageListener();

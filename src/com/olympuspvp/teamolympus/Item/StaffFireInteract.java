@@ -1,13 +1,24 @@
 package com.olympuspvp.teamolympus.Item;
+/*import net.minecraft.server.EntityFireball;
+import net.minecraft.server.EntitySmallFireball;*/
+
+/*import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.entity.CraftFireball;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.craftbukkit.entity.CraftSmallFireball;*/
 import net.minecraft.server.EntitySmallFireball;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.CraftWorld;
-import org.bukkit.craftbukkit.entity.CraftFireball;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.craftbukkit.entity.CraftSmallFireball;
 import org.bukkit.entity.Player;
+//import org.bukkit.util.Vector;
 import org.bukkit.util.Vector;
 
 public class StaffFireInteract {
@@ -22,15 +33,14 @@ public class StaffFireInteract {
 	
 	public static void run(Player p){
 		player_loc=p.getLocation();
-		player_loc.setY(player_loc.getY() + 2);
 		tb = p.getTargetBlock(null,100);
-
+		
 		origincoords[0] = player_loc.getX();
 		origincoords[1] = player_loc.getY();
 		origincoords[2] = player_loc.getZ();
 		
 		targetcoords[0] = tb.getX() + .5 * tb.getX() / Math.abs(tb.getX()); //I hate you sometimes, Notch. Really? Every quadrant is different?
-		targetcoords[1] = tb.getY() + .5;
+		targetcoords[1] = tb.getY() + .5 - 2;
 		targetcoords[2] = tb.getZ() + .5 * tb.getZ() / Math.abs(tb.getZ());
 
 		//didn't work. I guess I don't understand where the origin of the fireball is determined in this code. shrug. -Gav
@@ -54,19 +64,19 @@ public class StaffFireInteract {
 		//Unitize slope vector
 		for (int i = 0; i < 3; i++) {
 			slopevector[i] = slopevector[i] / linelength;
-
 		}
 
 		//Hadoken!
-
-		EntitySmallFireball fireball = new EntitySmallFireball(((CraftWorld) p.getWorld()).getHandle(), ((CraftPlayer) p).getHandle(),slopevector[0]*linelength,slopevector[1]*linelength,slopevector[2]*linelength);
-		CraftFireball craftfireball = new CraftFireball((CraftServer) p.getServer(),fireball);
+		EntitySmallFireball fireball = new EntitySmallFireball(((CraftWorld) p.getWorld()).getHandle(), ((CraftPlayer)p).getHandle(),slopevector[0]*linelength,slopevector[1]*linelength,slopevector[2]*linelength);
+		CraftSmallFireball craftfireball = new CraftSmallFireball((CraftServer) p.getServer(),fireball);
 		Vector velocity = new Vector();
 		velocity.setX(slopevector[0]);
 		velocity.setY(slopevector[1]);
 		velocity.setZ(slopevector[2]);
 		craftfireball.setVelocity(velocity);
+		craftfireball.setBounce(true);
+		Location fbl = craftfireball.getLocation();
+		craftfireball.getHandle().setLocation(fbl.getX(), fbl.getY()+1, fbl.getZ(), fbl.getPitch(), fbl.getYaw());
 		((CraftWorld) p.getWorld()).getHandle().addEntity(fireball);
-
 	}
 }

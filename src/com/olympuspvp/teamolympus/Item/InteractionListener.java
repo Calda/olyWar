@@ -64,12 +64,17 @@ public class InteractionListener implements Listener{
 			}
 
 			else if(hand == ItemType.STAFF_BLINK.getMaterial()){
-				StaffBlinkInteract.run(p);
+				StaffBlinkInteract.run(p, ow);
 				e.setCancelled(true);
 			}
 
 			else if(hand == ItemType.POWDER_POISON.getMaterial()){
 				PoisonPowderInteract.run(p);
+				e.setCancelled(true);
+			}
+			
+			else if(hand == ItemType.WOLF_EGG.getMaterial()){
+				WolfEggInteract.run(p);
 				e.setCancelled(true);
 			}
 
