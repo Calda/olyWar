@@ -21,7 +21,7 @@ public enum ItemType {
 	DAGGER_POISON(Material.STONE_SPADE, 1, "Poison Dagger", 0),//need to code
 	DAGGER_MAGIC(Material.IRON_SPADE, 1, "Magic Dagger", 0),//need to code
 	
-	STAFF_BLINK(Material.FEATHER, 1, "Blink Staff", 0),//need to code
+	STAFF_BLINK(Material.FEATHER, 1, "Blink Staff", 10),//need to code
 	STAFF_FIRE(Material.BLAZE_ROD, 1, "Fire Staff", 6),
 	STAFF_ICE(Material.STRING, 1, "Ice Wand", 8),//need to code
 	STAFF_HEALING(Material.WOOD_PICKAXE, 1, "Staff of Healing", 8),

@@ -22,10 +22,11 @@ public class StaffFireInteract {
 	
 	public static void run(Player p){
 		player_loc=p.getLocation();
+		player_loc.setY(player_loc.getY() + 2);
 		tb = p.getTargetBlock(null,100);
 
 		origincoords[0] = player_loc.getX();
-		origincoords[1] = player_loc.getY() + 2;
+		origincoords[1] = player_loc.getY();
 		origincoords[2] = player_loc.getZ();
 		
 		targetcoords[0] = tb.getX() + .5 * tb.getX() / Math.abs(tb.getX()); //I hate you sometimes, Notch. Really? Every quadrant is different?

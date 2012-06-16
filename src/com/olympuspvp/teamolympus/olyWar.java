@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,19 +14,27 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.olympuspvp.teamolympus.Item.InteractionListener;
 import com.olympuspvp.teamolympus.configuration.LoginListener;
+import com.olympuspvp.teamolympus.configuration.WarConfig;
+//import com.olympuspvp.teamolympus.configuration.WarConfig;
 import com.olympuspvp.teamolympus.damage.DamageListener;
 
 public class olyWar extends JavaPlugin{
+	public static Location spawn;
+	
 	@Override
 	public void onDisable(){}
 	@Override
 	public void onEnable(){
+		WarConfig.loadConfig();
+		spawn = WarConfig.getSpawn();
 		InteractionListener IL = new InteractionListener();
 		Bukkit.getServer().getPluginManager().registerEvents(IL, this);
 		DamageListener DL = new DamageListener();
 		Bukkit.getServer().getPluginManager().registerEvents(DL, this);
 		LoginListener LL = new LoginListener();
 		Bukkit.getServer().getPluginManager().registerEvents(LL, this);
+		
+		//HEARTBEAT
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
 				Player[] players = Bukkit.getOnlinePlayers();
@@ -44,7 +53,7 @@ public class olyWar extends JavaPlugin{
 
 				}
 			}
-		}, 30L, 30L);
+		}, 15L, 15L);
 	}
 	
 	public boolean onCommand(CommandSender s, Command cc, String cl, String[] args){

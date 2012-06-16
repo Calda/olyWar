@@ -25,14 +25,14 @@ public class PoisonPowderInteract {
 		p.setItemInHand(null);
 		p.updateInventory();
 		player_loc=p.getLocation();
-		tb = p.getTargetBlock(null,1);
+		tb = p.getTargetBlock(null,3);
 
 		origincoords[0] = player_loc.getX();
 		origincoords[1] = player_loc.getY();
 		origincoords[2] = player_loc.getZ();
 		
 		targetcoords[0] = tb.getX() + .5 * tb.getX() / Math.abs(tb.getX()); //I hate you sometimes, Notch. Really? Every quadrant is different?
-		targetcoords[1] = tb.getY() + .5;
+		targetcoords[1] = (tb.getY() + .5);
 		targetcoords[2] = tb.getZ() + .5 * tb.getZ() / Math.abs(tb.getZ());
 
 		//didn't work. I guess I don't understand where the origin of the fireball is determined in this code. shrug. -Gav

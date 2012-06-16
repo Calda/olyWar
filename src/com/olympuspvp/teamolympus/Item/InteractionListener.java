@@ -18,12 +18,7 @@ public class InteractionListener implements Listener{
 
 		if(a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK){
 
-			if(hand == ItemType.WAR_AXE.getMaterial()){
-				WarAxeInteract.run(p);
-				e.setCancelled(true);
-			}
-
-			else if(hand == ItemType.STAFF_HEALING.getMaterial()){
+			if(hand == ItemType.STAFF_HEALING.getMaterial()){
 				if(ConsumeMana.consumeMana(p,ItemType.STAFF_HEALING.getManaUsage())){
 					StaffHealingInteract.run(p);
 					e.setCancelled(true);
@@ -42,6 +37,11 @@ public class InteractionListener implements Listener{
 					StaffLightningInteract.run(p);
 					e.setCancelled(true);
 				}
+			}
+			
+			else if(hand == ItemType.STAFF_BLINK.getMaterial()){
+				StaffBlinkInteract.run(p);
+				e.setCancelled(true);
 			}
 
 		}else if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK){
@@ -63,11 +63,16 @@ public class InteractionListener implements Listener{
 				}
 			}
 
+			else if(hand == ItemType.STAFF_BLINK.getMaterial()){
+				StaffBlinkInteract.run(p);
+				e.setCancelled(true);
+			}
+
 			else if(hand == ItemType.POWDER_POISON.getMaterial()){
 				PoisonPowderInteract.run(p);
 				e.setCancelled(true);
 			}
-			
+
 
 		}
 	}

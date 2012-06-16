@@ -1,6 +1,11 @@
 package com.olympuspvp.teamolympus.configuration;
 
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.Item.Unlockable;
@@ -9,7 +14,55 @@ import com.olympuspvp.teamolympus.type.*;
 public class WarConfig {
 	private static FileConfiguration config;
 	
+	public static void loadConfig() {
+		File customConfigFile = new File("plugins/olyWar/config.yml");
+		FileConfiguration customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
+		config = customConfig;
+	}
 	
+	public static int getNumberOfMaps(){
+		return config.getInt("maps.number");
+	}
+	
+	public static Location getSpawn(){
+		int x = config.getInt("spawn.x");
+		int y = config.getInt("spawn.y");
+		int z = config.getInt("spawn.z");
+		String World = config.getString("spawn.world");
+		float pitch = config.getInt("spawn.pitch");
+		float yaw = config.getInt("spawn.yaw");
+		Location loc = new Location(Bukkit.getWorld(World), x, y, z, pitch, yaw);
+		return loc;
+	}
+	
+	public static Location getRedSpawn(int mapNumber){
+		int x = config.getInt("maps.map" + mapNumber + ".red.x");
+		int y = config.getInt("maps.map" + mapNumber + ".red.y");
+		int z = config.getInt("maps.map" + mapNumber + ".red.z");
+		String World = config.getString("maps.map" + mapNumber + ".red.world");
+		float pitch = config.getInt("maps.map" + mapNumber + ".red.pitch");
+		float yaw = config.getInt("maps.map" + mapNumber + ".red.yaw");
+		Location loc = new Location(Bukkit.getWorld(World), x, y, z, pitch, yaw);
+		return loc;
+	}
+
+	public static Location getBlueSpawn(int mapNumber){
+		int x = config.getInt("maps.map" + mapNumber + ".blue.x");
+		int y = config.getInt("maps.map" + mapNumber + ".blue.y");
+		int z = config.getInt("maps.map" + mapNumber + ".blue.z");
+		String World = config.getString("maps.map" + mapNumber + ".blue.world");
+		float pitch = config.getInt("maps.map" + mapNumber + ".blue.pitch");
+		float yaw = config.getInt("maps.map" + mapNumber + ".blue.yaw");
+		Location loc = new Location(Bukkit.getWorld(World), x, y, z, pitch, yaw);
+		return loc;
+	}
+	
+	public static String getMapName(int mapNumber){
+		String name = config.getString("maps.map" + mapNumber + ".name");
+		name = name.replace("&", "¤");
+		name = name.replace("¤¤", "&");
+		return name;
+	}
 	
 	
 	
@@ -17,9 +70,11 @@ public class WarConfig {
 	//***************
 	//PLAYER METHODS
 	//***************
+	@Deprecated
 	public static void setCurrentTeam(Player p, String newTeam){
 		olyWar.loadData(p).set("Current.team", newTeam);
-	}public static String getCurrentTeam(Player p){
+	}@Deprecated
+	public static String getCurrentTeam(Player p){
 		return olyWar.loadData(p).getString("Current.team");
 	}
 	
