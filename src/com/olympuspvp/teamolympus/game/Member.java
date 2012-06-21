@@ -1,4 +1,4 @@
 package com.olympuspvp.teamolympus.game;
 
-public class Member {
+public class Member{
 }

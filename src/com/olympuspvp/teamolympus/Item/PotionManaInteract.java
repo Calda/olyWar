@@ -5,12 +5,12 @@ import org.bukkit.entity.Player;
 public class PotionManaInteract {
 
 	@SuppressWarnings("deprecation")
-	public static void run(Player p){
-		
+	public static void run(final Player p){
+
 		p.setFoodLevel(20);
 		p.setItemInHand(null);
 		p.updateInventory();
-		
+
 	}
-	
+
 }

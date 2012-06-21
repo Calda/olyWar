@@ -1,6 +1,5 @@
 package com.olympuspvp.teamolympus.Item;
 import net.minecraft.server.EntityPotion;
-
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.CraftServer;
@@ -19,9 +18,9 @@ public class PoisonPowderInteract {
 	protected static double[] slopevector = new double[3];
 	private static Location player_loc;
 	private static Block tb;
-	
+
 	@SuppressWarnings("deprecation")
-	public static void run(Player p){
+	public static void run(final Player p){
 		p.setItemInHand(null);
 		p.updateInventory();
 		player_loc=p.getLocation();
@@ -30,10 +29,10 @@ public class PoisonPowderInteract {
 		origincoords[0] = player_loc.getX();
 		origincoords[1] = player_loc.getY();
 		origincoords[2] = player_loc.getZ();
-		
-		targetcoords[0] = tb.getX() + .5 * tb.getX() / Math.abs(tb.getX()); //I hate you sometimes, Notch. Really? Every quadrant is different?
+
+		targetcoords[0] = tb.getX() + ((.5 * tb.getX()) / Math.abs(tb.getX())); //I hate you sometimes, Notch. Really? Every quadrant is different?
 		targetcoords[1] = (tb.getY() + .5);
-		targetcoords[2] = tb.getZ() + .5 * tb.getZ() / Math.abs(tb.getZ());
+		targetcoords[2] = tb.getZ() + ((.5 * tb.getZ()) / Math.abs(tb.getZ()));
 
 		//didn't work. I guess I don't understand where the origin of the fireball is determined in this code. shrug. -Gav
 		// origincoords[0] = origincoords[0] + (int)(targetcoords[0] - origincoords[0])*0.1; //attempting to make fireballs not blow up in your face anymore. -Gav
@@ -43,7 +42,7 @@ public class PoisonPowderInteract {
 	}
 
 
-	public static void dofireball(Player p) {
+	public static void dofireball(final Player p) {
 		double linelength = 0;
 
 		//Calculate slope vector
@@ -61,9 +60,9 @@ public class PoisonPowderInteract {
 
 		//Hadoken!
 
-		EntityPotion fireball = new EntityPotion(((CraftWorld) p.getWorld()).getHandle(), ((CraftPlayer) p).getHandle(),16388);
-		CraftThrownPotion craftfireball = new CraftThrownPotion((CraftServer) p.getServer(),fireball);
-		Vector velocity = new Vector();
+		final EntityPotion fireball = new EntityPotion(((CraftWorld) p.getWorld()).getHandle(), ((CraftPlayer) p).getHandle(),16388);
+		final CraftThrownPotion craftfireball = new CraftThrownPotion((CraftServer) p.getServer(),fireball);
+		final Vector velocity = new Vector();
 		velocity.setX(slopevector[0]);
 		velocity.setY(slopevector[1]);
 		velocity.setZ(slopevector[2]);

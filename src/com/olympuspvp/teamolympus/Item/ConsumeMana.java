@@ -2,9 +2,9 @@ package com.olympuspvp.teamolympus.Item;
 
 import org.bukkit.entity.Player;
 
-public class ConsumeMana {
+public class ConsumeMana{
 
-	public static boolean consumeMana(Player p, int consume){
+	public static boolean consumeMana(final Player p, final int consume){
 		boolean enoughMana;
 		int mana = p.getFoodLevel();
 		if(mana < consume){
@@ -16,5 +16,5 @@ public class ConsumeMana {
 		}
 		return enoughMana;
 	}
-	
+
 }
