@@ -19,7 +19,7 @@ public class PoisonPowderInteract {
 	private static Location player_loc;
 	private static Block tb;
 
-	@SuppressWarnings("deprecation")
+	@Deprecated
 	public static void run(final Player p){
 		p.setItemInHand(null);
 		p.updateInventory();

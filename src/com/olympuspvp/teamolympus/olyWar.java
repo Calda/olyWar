@@ -11,10 +11,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.olympuspvp.teamolympus.Item.CloakInteract;
 import com.olympuspvp.teamolympus.Item.InteractionListener;
+import com.olympuspvp.teamolympus.Item.PortalInteract;
+import com.olympuspvp.teamolympus.command.Manager;
 import com.olympuspvp.teamolympus.configuration.LoginListener;
 import com.olympuspvp.teamolympus.configuration.LogoutListener;
 import com.olympuspvp.teamolympus.configuration.WarConfig;
@@ -24,6 +27,7 @@ import com.olympuspvp.teamolympus.game.AutoBalance;
 import com.olympuspvp.teamolympus.game.Team;
 import com.olympuspvp.teamolympus.game.TeamPref;
 import com.olympuspvp.teamolympus.type.ClassType;
+import com.olympuspvp.teamolympus.game.Runtime;
 
 public class olyWar extends JavaPlugin{
 
@@ -44,6 +48,7 @@ public class olyWar extends JavaPlugin{
 	private static HashMap<String, Integer> score = new HashMap<String, Integer>();
 
 	public static List<String> invisible = Arrays.asList(array);
+	public static List<String> hasLeftGame = Arrays.asList(array);
 	public static int currentMapNumber = 0;
 	public static Location currentRedSpawn = null;
 	public static Location currentBlueSpawn = null;
@@ -55,6 +60,7 @@ public class olyWar extends JavaPlugin{
 	@Override
 	public void onEnable(){
 		WarConfig.loadConfig();
+		Runtime.startGame(this);
 		spawn = WarConfig.getSpawn();
 
 		final InteractionListener IL = new InteractionListener(this);
@@ -63,10 +69,12 @@ public class olyWar extends JavaPlugin{
 		Bukkit.getServer().getPluginManager().registerEvents(DL, this);
 		final LoginListener LL = new LoginListener();
 		Bukkit.getServer().getPluginManager().registerEvents(LL, this);
-		final LogoutListener OL = new LogoutListener();
+		final LogoutListener OL = new LogoutListener(this);
 		Bukkit.getServer().getPluginManager().registerEvents(OL, this);
-		final DeathListener DTHL = new DeathListener();
+		final DeathListener DTHL = new DeathListener(this);
 		Bukkit.getServer().getPluginManager().registerEvents(DTHL, this);
+		final PortalInteract PI = new PortalInteract();
+		Bukkit.getServer().getPluginManager().registerEvents(PI, this);
 
 		// HEARTBEAT
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
@@ -98,23 +106,23 @@ public class olyWar extends JavaPlugin{
 				}
 			}
 		}, 15L, 15L);
-
 		//Autobalance Ticks
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 			@Override
 			public void run(){
-				AutoBalance.run();
+				AutoBalance.run(true);
 			}
 		}, 3*60*20L, 3*60*20L);
 	}
 
 	@Override
 	public boolean onCommand(final CommandSender s, final Command cc, final String cl, final String[] args){
+		Manager.run(s, cl, args, this);
 		return true;
 	}
 
 	public static String getLogo(){
-		return ChatColor.BLUE + "[" + ChatColor.YELLOW + "oly" + ChatColor.GOLD + "War" + ChatColor.BLUE + "] ";
+		return ChatColor.BLUE + "[" + ChatColor.YELLOW + "oly" + ChatColor.GOLD + "War" + ChatColor.BLUE + "] " + ChatColor.GOLD;
 	}
 
 	public static FileConfiguration loadData(final Player owner){
@@ -147,10 +155,13 @@ public class olyWar extends JavaPlugin{
 
 	public static void setTeam(final Player p, final Team t){
 		teams.put(getName(p), t);
+		CraftPlayer cp = (CraftPlayer) p;
+		cp.getHandle().name = t.getColor() + getName(p);
 	}
 
 	public static void leaveTeam(final Player p){
 		teams.remove(getName(p));
+		((CraftPlayer)p).getHandle().name = olyWar.getName(p);
 	}
 
 	public static TeamPref getPreference(final Player p){
@@ -181,7 +192,7 @@ public class olyWar extends JavaPlugin{
 		else return 0;
 	}
 
-	public static void die(final Player p){
+	public static void die(final Player p, olyWar ow){
 		kills.remove(getName(p));
 		final ClassType ct = getClass(p);
 		int ctkills = WarConfig.getClassScore(p, ct);
@@ -198,6 +209,8 @@ public class olyWar extends JavaPlugin{
 			if(olyWar.getTeam(p) == Team.RED) redPlayersAlive--;
 			else bluePlayersAlive--;
 		}
+		
+		if(redPlayersAlive == 0 || bluePlayersAlive == 0) Runtime.gameOverTDM(ow);
 	}
 
 	public static String getName(final Player p){

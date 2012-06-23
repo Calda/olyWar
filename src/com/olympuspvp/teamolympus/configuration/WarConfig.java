@@ -2,13 +2,17 @@ package com.olympuspvp.teamolympus.configuration;
 
 import java.io.File;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.CraftChunk;
 import org.bukkit.entity.Player;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.Item.Unlockable;
 import com.olympuspvp.teamolympus.type.ClassType;
+
 
 public class WarConfig{
 
@@ -31,7 +35,7 @@ public class WarConfig{
 		final String World = config.getString("spawn.world");
 		final float pitch = config.getInt("spawn.pitch");
 		final float yaw = config.getInt("spawn.yaw");
-		final Location loc = new Location(Bukkit.getWorld(World), x, y, z, pitch, yaw);
+		final Location loc = new Location(Bukkit.getWorlds().get(1), x, y, z, pitch, yaw);
 		return loc;
 	}
 
@@ -42,7 +46,7 @@ public class WarConfig{
 		final String World = config.getString("maps.map" + mapNumber + ".red.world");
 		final float pitch = config.getInt("maps.map" + mapNumber + ".red.pitch");
 		final float yaw = config.getInt("maps.map" + mapNumber + ".red.yaw");
-		final Location loc = new Location(Bukkit.getWorld(World), x, y, z, pitch, yaw);
+		final Location loc = new Location(Bukkit.getWorlds().get(1), x, y, z, pitch, yaw);
 		return loc;
 	}
 
@@ -53,22 +57,36 @@ public class WarConfig{
 		final String World = config.getString("maps.map" + mapNumber + ".blue.world");
 		final float pitch = config.getInt("maps.map" + mapNumber + ".blue.pitch");
 		final float yaw = config.getInt("maps.map" + mapNumber + ".blue.yaw");
-		final Location loc = new Location(Bukkit.getWorld(World), x, y, z, pitch, yaw);
+		final Location loc = new Location(Bukkit.getWorlds().get(1), x, y, z, pitch, yaw);
 		return loc;
 	}
 
 	public static String getMapName(final int mapNumber){
-		String name = config.getString("maps.map" + mapNumber + ".name");
-		name = name.replace("&", "¤");
-		name = name.replace("¤¤", "&");
-		return name;
+		return config.getString("maps.map" + mapNumber + ".name");
 	}
 
 	public static String getMapType(final int mapNumber){
-		final int type = config.getInt("maps.map" + mapNumber + ".type");
-		if(type == 1) return "Control Point";
-		else if(type == 2) return "Team Deathmatch";
-		else return "Control Point";
+		return config.getString("maps.map" + mapNumber + ".type");
+	}
+	
+	public static Chunk getChunk1(final int mapNumber){
+		final World world = Bukkit.getWorld(config.getString("maps.map" + mapNumber + ".Chunk1.world"));
+		final int x = config.getInt("maps.map" + mapNumber + ".Chunk1.x");
+		final int y = config.getInt("maps.map" + mapNumber + ".Chunk1.y");
+		net.minecraft.server.Chunk chnk = new net.minecraft.server.Chunk((net.minecraft.server.World) world, x, y);
+		CraftChunk cchunk = new CraftChunk((net.minecraft.server.Chunk) chnk);
+		Chunk chunk = cchunk;
+		return chunk;
+	}
+	
+	public static Chunk getChunk2(final int mapNumber){
+		final World world = Bukkit.getWorld(config.getString("maps.map" + mapNumber + ".Chunk1.world"));
+		final int x = config.getInt("maps.map" + mapNumber + ".Chunk1.x");
+		final int y = config.getInt("maps.map" + mapNumber + ".Chunk1.y");
+		net.minecraft.server.Chunk chnk = new net.minecraft.server.Chunk((net.minecraft.server.World) world, x, y);
+		CraftChunk cchunk = new CraftChunk((net.minecraft.server.Chunk) chnk);
+		Chunk chunk = cchunk;
+		return chunk;
 	}
 
 	// ***************
@@ -121,5 +139,31 @@ public class WarConfig{
 
 	public static boolean getWeaponStatus(final Player p, final Unlockable u){
 		return olyWar.loadData(p).getBoolean("Unlocks.Weapons." + u.getUnlockingClass().getName() + "." + u.getItemType().toString());
+	}
+	
+	public static void setWeaponPreference(final Player p, final Unlockable u){
+		olyWar.loadData(p).set("Unlocks.Weapons.Preference" , u.getItemType().name());
+	}
+
+	public static Unlockable getWeaponPreference(final Player p, final ClassType ct){
+		String pref;
+		if(ct == ClassType.PALADIN) pref = olyWar.loadData(p).getString("Unlocks.Weapons.Preference.Paladin");
+		else if(ct == ClassType.SORCERER) pref = olyWar.loadData(p).getString("Unlocks.Weapons.Preference.Sorcerer");
+		else if(ct == ClassType.RANGER) pref = olyWar.loadData(p).getString("Unlocks.Weapons.Preference.Ranger");
+		else pref = olyWar.loadData(p).getString("Unlocks.Weapons.Preference.Assassin");
+		
+		if(pref.equals("Fire Sword")) return Unlockable.SWORD_FIRE;
+		else if(pref.equals("Magic Sword")) return Unlockable.SWORD_MAGIC;
+		else if(pref.equals("Poison Dagger")) return Unlockable.DAGGER_POISON;
+		else if(pref.equals("Magic Dagger")) return Unlockable.DAGGER_MAGIC;
+		else if(pref.equals("Big Fire Staff")) return Unlockable.STAFF_FIRE_BIG;
+		else if(pref.equals("Burning Crossbow")) return Unlockable.CROSSBOW_BURNING;
+		else if(pref.equals("Magic Crossbow")) return Unlockable.CROSSBOW_MAGIC;
+		else{
+			if(ct == ClassType.PALADIN) return Unlockable.SWORD_LONG;
+			else if(ct == ClassType.SORCERER) return Unlockable.STAFF_FIRE;
+			else if(ct == ClassType.RANGER) return Unlockable.CROSSBOW;
+			else return Unlockable.DAGGER;
+		}
 	}
 }

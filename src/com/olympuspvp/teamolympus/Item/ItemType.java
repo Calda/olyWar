@@ -11,6 +11,9 @@ public enum ItemType{
 	POTION_HEALTH(Material.MILK_BUCKET, 1, "Mana Potion", 0),
 
 	BOW(Material.BOW, 1, "Bow", 0),
+	CROSSBOW_BURNING(null, 1, "Burning Crossbow", 0), //NEED TO BE CHANGED
+	CROSSBOW_MAGIC(null, 1, "Magic Crossbow", 0), //NEED TO BE CHANGED
+	CROSSBOW(null, 1, "Crossbow", 0), //NEED TO BE CHANGED
 	ARROW(Material.ARROW, 64, "Arrow", 0),
 	WOLF_EGG(Material.BONE, 64, "Arrow", 14),
 
@@ -25,14 +28,14 @@ public enum ItemType{
 
 	STAFF_BLINK(Material.STONE_PICKAXE, 1, "Blink Staff", 10),
 	STAFF_FIRE(Material.DIAMOND_PICKAXE, 1, "Fire Staff", 6),
+	STAFF_FIRE_BIG(null, 1, "Big Fire Staff", 6), //NEED TO BE CHANGED
 	STAFF_HEALING(Material.WOOD_PICKAXE, 1, "Staff of Healing", 8),
 	STAFF_LIGHTNING(Material.GOLD_PICKAXE, 1, "Lightning Staff", 20),
 
-	RED_PORTAL(Material.PORTAL, 1, "Portal", 0), // need to code
-	BLUE_PORTAL(Material.PORTAL, 1, "Portal", 0), // need to code
-	PORTAL_CALLBACK(null, 1, "Portal Callback", 20), // NEEDS TO BE CHANGED//need to code
+	PORTAL(Material.PORTAL, 1, "Portal", 0),
+	PORTAL_CALLBACK(null, 1, "Portal Callback", 20), // NEEDS TO BE CHANGED/
 	CLOAK(Material.LEATHER, 1, "Cloak of Invisibility", 20),
-	POWDER_POISON(Material.SUGAR, 5, "Poison Powder", 0),
+	POWDER_POISON(Material.POTION, 5, "Poison Powder", 0),
 	THROWING_KNIVES(Material.SNOW_BALL, 64, "Throwing Knives", 0);
 
 	private Material mat;

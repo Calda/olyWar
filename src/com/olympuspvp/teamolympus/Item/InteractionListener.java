@@ -27,10 +27,13 @@ public class InteractionListener implements Listener{
 			if(CloakInteract.checkVisible(p)) CloakInteract.visible(p);
 		}
 
-		if(e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE){
-
-			//usage for items go here!
-
+		if(a == Action.LEFT_CLICK_BLOCK){
+			if(e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE){
+				e.setCancelled(true);
+				//usage for items go here!
+			}
+		}if(hand == Material.POTION){
+			e.setCancelled(false);
 		}else{
 
 			if((a == Action.LEFT_CLICK_AIR) || (a == Action.LEFT_CLICK_BLOCK)){
@@ -54,11 +57,6 @@ public class InteractionListener implements Listener{
 						StaffLightningInteract.run(p);
 						e.setCancelled(true);
 					}
-				}
-
-				else if(hand == ItemType.POWDER_POISON.getMaterial()){
-					PoisonPowderInteract.run(p);
-					e.setCancelled(true);
 				}
 
 			}else if((a == Action.RIGHT_CLICK_AIR) || (a == Action.RIGHT_CLICK_BLOCK)){
@@ -89,11 +87,6 @@ public class InteractionListener implements Listener{
 
 				else if(hand == ItemType.STAFF_BLINK.getMaterial()){
 					StaffBlinkInteract.run(p, this.plugin);
-					e.setCancelled(true);
-				}
-
-				else if(hand == ItemType.POWDER_POISON.getMaterial()){
-					PoisonPowderInteract.run(p);
 					e.setCancelled(true);
 				}
 
