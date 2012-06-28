@@ -14,13 +14,8 @@ import com.olympuspvp.teamolympus.configuration.WarConfig;
 
 public class Runtime{
 	final static Server s = Bukkit.getServer();
-<<<<<<< HEAD
 	public final static String map = ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "MAP" + ChatColor.DARK_GRAY + "] " + ChatColor.GOLD;
 
-=======
-	final static String map = ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "MAP" + ChatColor.DARK_GRAY + "] " + ChatColor.GOLD;
-	
->>>>>>> wat
 	public static void startGame(final olyWar ow){
 		final Random r = new Random();
 		final int numberOfMaps = WarConfig.getNumberOfMaps();
@@ -29,13 +24,8 @@ public class Runtime{
 		Location blueSpawn;
 		String mapName;
 		String mapType;
-<<<<<<< HEAD
 		Chunk point1;
 		Chunk point2;
-=======
-
-		while(true){
->>>>>>> wat
 
 			boolean brokenMap = false;
 			do{
@@ -102,7 +92,6 @@ public class Runtime{
 						}
 					}
 				}, 30*20L);
-<<<<<<< HEAD
 		}
 	}public static void gameOverTDM(olyWar ow){
 
@@ -136,15 +125,7 @@ public class Runtime{
 			if(olyWar.getLives(p) != 0){
 				olyWar.die(p, ow);
 				p.teleport(olyWar.spawn, TeleportCause.PLUGIN);
-=======
->>>>>>> wat
 			}
 		}
-	}public static void gameOverTDM(){
-		s.broadcastMessage(map +"And that's the game!");
-		s.broadcastMessage(map + "Final score is " + ChatColor.RED + olyWar.redPlayersAlive + ChatColor.GOLD + " - " + ChatColor.BLUE + olyWar.bluePlayersAlive);
-		if(olyWar.bluePlayersAlive == 0) s.broadcastMessage(map +"Team " + ChatColor.RED + "Red " + ChatColor.GOLD + " defeated the " + ChatColor.BLUE + "Blue" + ChatColor.GOLD + " Team!");
-		else s.broadcastMessage(map +"Team " + ChatColor.BLUE + "Blue " + ChatColor.GOLD + " defeated the " + ChatColor.RED + "Red" + ChatColor.GOLD + " Team!");
-		
 	}
 }

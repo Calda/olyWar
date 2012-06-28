@@ -36,14 +36,9 @@ public class olyWar extends JavaPlugin{
 	public static Location blueSpawn;
 	private static String[] array = {};
 	public static boolean gameIsActive = false;
-	public static String gameType = null;
 	public static int playersAlive = 0;
 	public static int redPlayersAlive = 0;
 	public static int bluePlayersAlive = 0;
-	public static List<String> invisible = Arrays.asList(array);
-	public static int currentMapNumber = 0;
-	public static Location currentRedSpawn = null;
-	public static Location currentBlueSpawn = null;
 
 	public static HashMap<String, Team> teams = new HashMap<String, Team>();
 	public static HashMap<String, Integer> lives = new HashMap<String, Integer>();
@@ -52,15 +47,12 @@ public class olyWar extends JavaPlugin{
 	private static HashMap<String, Integer> kills = new HashMap<String, Integer>();
 	private static HashMap<String, Integer> score = new HashMap<String, Integer>();
 
-<<<<<<< HEAD
 	public static List<String> invisible = Arrays.asList(array);
 	public static List<String> hasLeftGame = Arrays.asList(array);
 	public static int currentMapNumber = 0;
 	public static Location currentRedSpawn = null;
 	public static Location currentBlueSpawn = null;
 
-=======
->>>>>>> wat
 	@Override
 	public void onDisable(){
 	}
@@ -68,11 +60,7 @@ public class olyWar extends JavaPlugin{
 	@Override
 	public void onEnable(){
 		WarConfig.loadConfig();
-<<<<<<< HEAD
 		Runtime.startGame(this);
-=======
-		
->>>>>>> wat
 		spawn = WarConfig.getSpawn();
 
 		final InteractionListener IL = new InteractionListener(this);
@@ -212,16 +200,14 @@ public class olyWar extends JavaPlugin{
 		totalkills++; ctkills++;
 		WarConfig.setClassScore(p, ct, ctkills);
 		WarConfig.setScore(p, totalkills);
-		if(olyWar.gameType.equals("Team Deathmatch")){
-			int numlives = getLives(p);
-			numlives--;
-			if(numlives > 0) lives.put(getName(p), numlives);
-			if(numlives == 0){
-				lives.remove(getName(p));
-				playersAlive--;
-				if(olyWar.getTeam(p) == Team.RED) redPlayersAlive--;
-				else bluePlayersAlive--;
-			}
+		int numlives = getLives(p);
+		numlives--;
+		if(numlives > 0) lives.put(getName(p), numlives);
+		if(numlives == 0){
+			lives.remove(getName(p));
+			playersAlive--;
+			if(olyWar.getTeam(p) == Team.RED) redPlayersAlive--;
+			else bluePlayersAlive--;
 		}
 		
 		if(redPlayersAlive == 0 || bluePlayersAlive == 0) Runtime.gameOverTDM(ow);
