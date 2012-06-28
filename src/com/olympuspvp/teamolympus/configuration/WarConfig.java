@@ -1,6 +1,8 @@
 package com.olympuspvp.teamolympus.configuration;
 
 import java.io.File;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -11,9 +13,10 @@ import org.bukkit.craftbukkit.CraftChunk;
 import org.bukkit.entity.Player;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.Item.Unlockable;
+import com.olympuspvp.teamolympus.chat.Tag;
 import com.olympuspvp.teamolympus.type.ClassType;
 
-
+@SuppressWarnings("unused")
 public class WarConfig{
 
 	private static FileConfiguration config;
@@ -68,7 +71,7 @@ public class WarConfig{
 	public static String getMapType(final int mapNumber){
 		return config.getString("maps.map" + mapNumber + ".type");
 	}
-	
+
 	public static Chunk getChunk1(final int mapNumber){
 		final World world = Bukkit.getWorld(config.getString("maps.map" + mapNumber + ".Chunk1.world"));
 		final int x = config.getInt("maps.map" + mapNumber + ".Chunk1.x");
@@ -78,7 +81,7 @@ public class WarConfig{
 		Chunk chunk = cchunk;
 		return chunk;
 	}
-	
+
 	public static Chunk getChunk2(final int mapNumber){
 		final World world = Bukkit.getWorld(config.getString("maps.map" + mapNumber + ".Chunk1.world"));
 		final int x = config.getInt("maps.map" + mapNumber + ".Chunk1.x");
@@ -140,7 +143,7 @@ public class WarConfig{
 	public static boolean getWeaponStatus(final Player p, final Unlockable u){
 		return olyWar.loadData(p).getBoolean("Unlocks.Weapons." + u.getUnlockingClass().getName() + "." + u.getItemType().toString());
 	}
-	
+
 	public static void setWeaponPreference(final Player p, final Unlockable u){
 		olyWar.loadData(p).set("Unlocks.Weapons.Preference" , u.getItemType().name());
 	}
@@ -151,7 +154,7 @@ public class WarConfig{
 		else if(ct == ClassType.SORCERER) pref = olyWar.loadData(p).getString("Unlocks.Weapons.Preference.Sorcerer");
 		else if(ct == ClassType.RANGER) pref = olyWar.loadData(p).getString("Unlocks.Weapons.Preference.Ranger");
 		else pref = olyWar.loadData(p).getString("Unlocks.Weapons.Preference.Assassin");
-		
+
 		if(pref.equals("Fire Sword")) return Unlockable.SWORD_FIRE;
 		else if(pref.equals("Magic Sword")) return Unlockable.SWORD_MAGIC;
 		else if(pref.equals("Poison Dagger")) return Unlockable.DAGGER_POISON;
@@ -165,5 +168,34 @@ public class WarConfig{
 			else if(ct == ClassType.RANGER) return Unlockable.CROSSBOW;
 			else return Unlockable.DAGGER;
 		}
+	}
+
+	public static boolean getTagStatus(Player p, Tag t){
+		List<String> unlocked = getTagList(p);
+		if(unlocked != null){
+			if(unlocked.contains(t.toString())) return true;
+			else return false;
+		}else return false;
+	}
+
+	public static void addUnlockedTag(Player p, Tag t){
+		String add = t.toString();
+		List<String> unlocked = getTagList(p);
+		unlocked.add(add);
+		olyWar.loadData(p).set("Unlocks.tags.list", unlocked);
+	}
+
+	public static List<String> getTagList(Player p){
+		return olyWar.loadData(p).getStringList("Unlocks.tags.list");
+	}
+	
+	public static void setTagPreference(Player p, Tag t){
+		olyWar.loadData(p).set("Unlocks.tags.pref", t.toString());
+	}
+	
+	public static String getTagPreference(Player p){
+		String pref = Tag.valueOf(olyWar.loadData(p).getString("Unlocks.tags.pref")).toTag();
+		if(pref == null) pref = Tag.NOOB.toTag();
+		return pref;
 	}
 }

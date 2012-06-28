@@ -30,7 +30,7 @@ public class InteractionListener implements Listener{
 		if(a == Action.LEFT_CLICK_BLOCK){
 			if(e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE){
 				e.setCancelled(true);
-				//usage for items go here!
+				EnchantingTableInteract.help(p, p.getItemInHand().getType());
 			}
 		}if(hand == Material.POTION){
 			e.setCancelled(false);

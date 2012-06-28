@@ -14,7 +14,7 @@ import com.olympuspvp.teamolympus.configuration.WarConfig;
 
 public class Runtime{
 	final static Server s = Bukkit.getServer();
-	final static String map = ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "MAP" + ChatColor.DARK_GRAY + "] " + ChatColor.GOLD;
+	public final static String map = ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "MAP" + ChatColor.DARK_GRAY + "] " + ChatColor.GOLD;
 
 	public static void startGame(final olyWar ow){
 		final Random r = new Random();
@@ -54,14 +54,15 @@ public class Runtime{
 				final String mn = mapName;
 				final Location red = redSpawn;
 				final Location blue = blueSpawn;
+				Vote.openVote();
 				s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mapType + " " + ChatColor.DARK_GREEN + mapName + ChatColor.GOLD + " in 30 seconds.");
 				s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");
 				s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 20 seconds.");
-					s.broadcastMessage(map + "Use the command /vote [yes/no/results] to decide to vote!");}}, 10*20L);
+					s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 10*20L);
 				s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 10 seconds.");
-					s.broadcastMessage(map + "Use the command /vote [yes/no/results] to decide to vote!");}}, 20*20L);
+					s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 20*20L);
 				s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 5 seconds.");
-					s.broadcastMessage(map + "Use the command /vote [yes/no/results] to decide to vote!");}}, 25*20L);
+					s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 25*20L);
 				s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){
 					@Override
 					public void run(){

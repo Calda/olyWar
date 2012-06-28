@@ -109,16 +109,15 @@ public class DeathListener implements Listener{
 			Bukkit.getServer().broadcastMessage(e.getDeathMessage());
 			e.setDeathMessage(null);
 			String message = null;
-			if(numberOfKills == 4) message = "Massive Killstreak!";
-			if(numberOfKills >= 5) message = "Overkill!";
+			if(numberOfKills == 4) message = "Overkill!";
+			if(numberOfKills >= 5) message = "Massive Killstreak!";
 			if(numberOfKills >= 7) message = "We got a massacre on our hands!";
-			if (message != null) Bukkit.getServer().broadcastMessage(streak + ChatColor.RED + message);
+			if (message != null) Bukkit.getServer().broadcastMessage(streak + ChatColor.DARK_GRAY + message);
 
 			final int pointsBefore = olyWar.getScore(killed);
 
 			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You got " + cc1 + pointsBefore + ChatColor.GOLD + " points during this life as a " + cc1 + olyWar.getClass(killed).getName());
-			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You now have " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points as a " +
-					cc1 + olyWar.getClass(killed).getName() + ChatColor.GOLD + "for" + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points total");
+			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You now have " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points with that class and " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points total");
 			olyWar.die(killed, olyw);
 			Inventory i = killed.getInventory();
 			i.setContents(null);

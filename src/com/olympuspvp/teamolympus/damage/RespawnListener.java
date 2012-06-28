@@ -1,4 +1,4 @@
-package com.olympuspvp.teamolympus.configuration;
+package com.olympuspvp.teamolympus.damage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.Item.ItemType;
 import com.olympuspvp.teamolympus.Item.Unlockable;
+import com.olympuspvp.teamolympus.configuration.WarConfig;
 import com.olympuspvp.teamolympus.game.Team;
 import com.olympuspvp.teamolympus.type.ClassType;
 

@@ -53,7 +53,7 @@ public class DamageListener implements Listener{
 		}
 
 		else if(attacker instanceof Wolf){
-			e.setDamage(3);
+			e.setDamage(2);
 		}
 
 		else if(attacker instanceof Player){

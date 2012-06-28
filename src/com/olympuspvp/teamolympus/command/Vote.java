@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.olympuspvp.teamolympus.olyWar;
+import com.olympuspvp.teamolympus.game.Runtime;
 
 public class Vote {
 	private static boolean voteInProgress = false;
@@ -48,11 +49,13 @@ public class Vote {
 
 	public static void openVote(){
 		voteInProgress = true;
+		yes = 0;
+		no = 0;
 	}
 
 	public static boolean getVerdict(){
 		voteInProgress = false;
-		Bukkit.getServer().broadcastMessage("Voting results are "+ yes + " Yes/ " + no + " No");
+		Bukkit.getServer().broadcastMessage(Runtime.map + "Voting results are "+ yes + " Yes/ " + no + " No");
 		if(yes >= no) return true;
 		else return false;
 	}

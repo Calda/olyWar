@@ -215,10 +215,7 @@ public class olyWar extends JavaPlugin{
 
 	public static String getName(final Player p){
 		String name = p.getName();
-		if(name.contains("¤")){
-			name = name.substring(2);
-		}
-		return name;
+		return ChatColor.stripColor(name);
 	}
 
 }
