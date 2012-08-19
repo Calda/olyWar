@@ -16,10 +16,11 @@ public class PotionHealthInteract {
 		int max;
 		if(ct != null) max = ct.getMaxHealth();
 		else max = 20;
-
-		p.setHealth(max);
-		p.setItemInHand(null);
-		p.updateInventory();
+		if(p.getHealth() != max){
+			p.setHealth(max);
+			p.setItemInHand(null);
+			p.updateInventory();
+		}
 
 	}
 

@@ -20,81 +20,87 @@ public class Runtime{
 		final Random r = new Random();
 		final int numberOfMaps = WarConfig.getNumberOfMaps();
 		int chosenMap;
-		Location redSpawn;
-		Location blueSpawn;
 		String mapName;
 		String mapType;
 		Chunk point1;
 		Chunk point2;
 
-			boolean brokenMap = false;
-			do{
-				chosenMap = r.nextInt(numberOfMaps);
-				chosenMap++;
-				redSpawn = WarConfig.getRedSpawn(chosenMap);
-				blueSpawn = WarConfig.getBlueSpawn(chosenMap);
-				mapName = WarConfig.getMapName(chosenMap);
-				mapType = WarConfig.getMapType(chosenMap);
-				if(mapName == null || mapType == null || blueSpawn == null || redSpawn == null){
-					brokenMap = true;
-					System.out.println("Map number " + chosenMap + " is broken. Finding a different map.");
-				}else brokenMap = false;
-				
-				if(mapType.equals("Attack/Defend") || mapType.equalsIgnoreCase("King of the Hill")){
-					point1 = WarConfig.getChunk1(chosenMap);
-					point2 = WarConfig.getChunk2(chosenMap);
-					if(point1 == null) brokenMap = true;
-					else if(point2 == null && mapType.equals("Attack/Defend")) brokenMap = true;
+		boolean brokenMap = false;
+		int loops = 0;
+		do{
+			chosenMap = r.nextInt(numberOfMaps);
+			chosenMap++;
+			Location redSpawn = WarConfig.getRedSpawn(chosenMap);
+			Location blueSpawn = WarConfig.getBlueSpawn(chosenMap);
+			mapName = WarConfig.getMapName(chosenMap);
+			mapType = WarConfig.getMapType(chosenMap);
+			if(mapName == null || mapType == null || blueSpawn == null || redSpawn == null){
+				brokenMap = true;
+				System.out.println("Map number " + chosenMap + " is broken. Finding a different map.");
+				if(loops > 20){
+					final String tag = ChatColor.BLACK + "[" + ChatColor.DARK_RED + "!" + ChatColor.BLACK + "] ";
+					Bukkit.getServer().broadcastMessage(tag + ChatColor.DARK_RED + "The map selecting system is currently broken.");
+					Bukkit.getServer().broadcastMessage(tag + ChatColor.DARK_RED + "The server requires developer action.");
 				}
+			}else{
+				olyWar.redSpawn = redSpawn;
+				olyWar.blueSpawn = blueSpawn;
+				olyWar.mapName = mapName;
+				olyWar.mapType = mapType;
+			}
 
-			}while(brokenMap);
+			if(mapType.equals("Attack/Defend") || mapType.equalsIgnoreCase("King of the Hill")){
+				point1 = WarConfig.getChunk1(chosenMap);
+				point2 = WarConfig.getChunk2(chosenMap);
+				if(point1 == null) brokenMap = true;
+				else if(point2 == null && mapType.equals("Attack/Defend")) brokenMap = true;
+			}
+			loops++;
+		}while(brokenMap);
 
-			if(!brokenMap){
-				final String mt = mapType;
-				final String mn = mapName;
-				final Location red = redSpawn;
-				final Location blue = blueSpawn;
-				Vote.openVote();
-				s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mapType + " " + ChatColor.DARK_GREEN + mapName + ChatColor.GOLD + " in 30 seconds.");
-				s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");
-				s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 20 seconds.");
-					s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 10*20L);
-				s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 10 seconds.");
-					s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 20*20L);
-				s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 5 seconds.");
-					s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 25*20L);
-				s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){
-					@Override
-					public void run(){
-						if(Vote.getVerdict()){
-							olyWar.gameIsActive = true; //GAME IS ACTIVE\\
-							s.broadcastMessage(map + "Map is now " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn);
+		if(!brokenMap){
+			final String mt = mapType;
+			final String mn = mapName;
+			Vote.openVote();
+			s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mapType + " " + ChatColor.DARK_GREEN + mapName + ChatColor.GOLD + " in 30 seconds.");
+			s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");
+			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 20 seconds.");
+			s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 10*20L);
+			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 10 seconds.");
+			s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 20*20L);
+			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 5 seconds.");
+			s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 25*20L);
+			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){
+				@Override
+				public void run(){
+					if(Vote.getVerdict()){
+						s.broadcastMessage(map + "Map is now " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn);
 
-							for(final Player plr : s.getOnlinePlayers()){
-								final TeamPref playerPref = olyWar.getPreference(plr);
-								if(playerPref == TeamPref.RED) olyWar.setTeam(plr, Team.RED);
-								else if(playerPref == TeamPref.BLUE) olyWar.setTeam(plr, Team.BLUE);
-								else if(playerPref == TeamPref.RANDOM){
-									final boolean joinRed = r.nextBoolean();
-									if(joinRed) olyWar.setTeam(plr, Team.RED);
-									else olyWar.setTeam(plr, Team.BLUE);
-								}else{} // they do not join a team : in lobby
-							}
-
-							AutoBalance.run(false);
-
-							for(Player p : s.getOnlinePlayers()){
-								if(olyWar.getTeam(p) == Team.RED) p.teleport(red, TeleportCause.PLUGIN);
-								if(olyWar.getTeam(p) == Team.BLUE) p.teleport(blue, TeleportCause.PLUGIN);
-							}
-						}else{
-							startGame(ow);
+						for(final Player p : s.getOnlinePlayers()){
+							olyWar.loadTeamFromPreference(p);
 						}
-					}
-				}, 30*20L);
-		}
-	}public static void gameOverTDM(olyWar ow){
 
+						AutoBalance.run(false);
+
+						for(final Player p : s.getOnlinePlayers()){
+							olyWar.spawnPlayer(p);
+							olyWar.applyClass(p);
+						}
+						
+						olyWar.gameIsActive = true; //GAME IS ACTIVE\\
+						
+					}else{
+						startGame(ow);
+					}
+				}
+			}, 30*20L);
+		}
+	}
+	
+	public static void gameOverTDM(final olyWar ow){
+		
+		olyWar.gameIsActive = false;
+		
 		final int redAlive = olyWar.redPlayersAlive;
 		final int blueAlive = olyWar.bluePlayersAlive;
 
@@ -111,7 +117,7 @@ public class Runtime{
 		}s.broadcastMessage(map + "Team " + winner + ChatColor.GOLD + " defeated Team " + loser);
 		killAll(ow);
 		olyWar.gameIsActive = false;
-		Runtime.startGame(ow);
+		startGame(ow);
 	}
 
 	public static void gameOverAD(){
@@ -119,9 +125,9 @@ public class Runtime{
 	}public static void gameOverKOTH(){
 
 	}
-	public static void killAll(olyWar ow){
+	public static void killAll(final olyWar ow){
 		olyWar.hasLeftGame.clear();
-		for(Player p : s.getOnlinePlayers()){
+		for(final Player p : s.getOnlinePlayers()){
 			if(olyWar.getLives(p) != 0){
 				olyWar.die(p, ow);
 				p.teleport(olyWar.spawn, TeleportCause.PLUGIN);

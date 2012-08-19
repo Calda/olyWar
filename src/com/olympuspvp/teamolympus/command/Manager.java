@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.game.TeamPref;
+import com.olympuspvp.teamolympus.type.ClassType;
 
 public class Manager {
 
@@ -18,15 +19,21 @@ public class Manager {
 			}
 			if(cl.equalsIgnoreCase("red")){
 				olyWar.setPreference(p, TeamPref.RED);
-				p.sendMessage(olyWar.getLogo() + "You preferred team is now Team " + ChatColor.RED + "Red");
+				p.sendMessage(olyWar.getLogo() + "You preferred team is now" + ChatColor.RED + " Team Red");
 			}
 			if(cl.equalsIgnoreCase("blue")){
 				olyWar.setPreference(p, TeamPref.BLUE);
-				p.sendMessage(olyWar.getLogo() + "You preferred team is now Team " + ChatColor.BLUE + "Blue");
+				p.sendMessage(olyWar.getLogo() + "You preferred team is now" + ChatColor.BLUE + " Team Blue");
 			}
 			if(cl.equalsIgnoreCase("random")){
 				olyWar.setPreference(p, TeamPref.RANDOM);
 				p.sendMessage(olyWar.getLogo() + "You team will now be randomly assigned at the start of each game");
+			}
+			if(cl.equalsIgnoreCase("classes")){
+				StringBuilder sb = new StringBuilder();
+				for(ClassType ct : ClassType.values()){
+					sb.append(ct.getName() + "\n");
+				}s.sendMessage(ChatColor.GREEN + "Classes:\n" + ChatColor.GRAY + sb.toString());
 			}
 			if(cl.equalsIgnoreCase("vote")){
 				Vote.run(p, args);

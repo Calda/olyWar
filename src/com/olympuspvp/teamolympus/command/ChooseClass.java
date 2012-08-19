@@ -32,7 +32,7 @@ public class ChooseClass {
 				type = "Huntsman";
 			}else if(args[0].equalsIgnoreCase("ranger")){
 				olyWar.setClass(p, ClassType.RANGER); 
-				type = "RANGER";
+				type = "Ranger";
 			}else if(args[0].equalsIgnoreCase("mage")){
 				olyWar.setClass(p, ClassType.MAGE); 
 				type = "Mage";
@@ -44,10 +44,13 @@ public class ChooseClass {
 				type = "Infiltrator";
 			}else if(args[0].equalsIgnoreCase("warrior")){
 				olyWar.setClass(p, ClassType.WARRIOR); 
-				type = "WARRIOR";
+				type = "Warrior";
 			}else if(args[0].equalsIgnoreCase("paladin")){
 				olyWar.setClass(p, ClassType.PALADIN); 
 				type = "Paladin";
+			}else if(args[0].equalsIgnoreCase("rouge")){
+				olyWar.setClass(p, ClassType.ROUGE); 
+				type = "Rouge";
 			}
 
 			if(type != null){

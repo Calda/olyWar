@@ -8,7 +8,6 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.configuration.WarConfig;
-import com.olympuspvp.teamolympus.game.Team;
 
 public class ChatListener implements Listener{
 	
@@ -16,7 +15,7 @@ public class ChatListener implements Listener{
 	public void onPlayerChat(PlayerChatEvent e){
 		
 		Player p = e.getPlayer();
-		String name = p.getName();
+		String name = olyWar.getName(p);
 		String sepColor = ChatColor.DARK_GRAY + "";
 		String chatColor = ChatColor.WHITE + "";
 		if(!name.contains("¤")){
@@ -40,10 +39,6 @@ public class ChatListener implements Listener{
 				name = ChatColor.DARK_AQUA + "Medious";
 				sepColor = ChatColor.AQUA + "";
 				chatColor = ChatColor.GREEN + "";
-			}else if(name.contains("CarlTheLawnmower")){
-				name = ChatColor.DARK_PURPLE + "Carl" + ChatColor.LIGHT_PURPLE + "The" + ChatColor.DARK_PURPLE + "Lawnmower";
-				sepColor = ChatColor.LIGHT_PURPLE + "";
-				chatColor = ChatColor.RED + "";
 			}else if(name.contains("willno123")){
 				name = ChatColor.DARK_GRAY + "willno" + ChatColor.WHITE + "1" + ChatColor.GRAY + "2" + ChatColor.DARK_GRAY + "3";
 				sepColor = ChatColor.BLACK + "";

@@ -7,9 +7,11 @@ public class PotionManaInteract {
 	@SuppressWarnings("deprecation")
 	public static void run(final Player p){
 
-		p.setFoodLevel(20);
-		p.setItemInHand(null);
-		p.updateInventory();
+		if(p.getFoodLevel() != 20){
+			p.setFoodLevel(20);
+			p.setItemInHand(null);
+			p.updateInventory();
+		}
 
 	}
 

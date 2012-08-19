@@ -1,0 +1,19 @@
+name: Realms RPG
+main: com.olympuspvp.teamolympus.olyWar
+version: 1.0
+author: CalDaBeast
+description: RPG
+
+commands:
+    vote:
+        description: gives a player's streak
+    red:
+        description: shows global mac streak
+    blue:
+        description: shows global mac streak
+    random:
+        description: shows global mac streak
+    class:
+        description: gives a player's streak
+    classes:
+        description: gives a player's streak

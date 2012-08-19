@@ -31,9 +31,13 @@ public class DeathListener implements Listener{
 	}
 	@EventHandler
 	public void onPlayerDeath(final PlayerDeathEvent e){
-		final String kill = ChatColor.WHITE + "[" + ChatColor.AQUA + "KILL" + ChatColor.WHITE + "] ";
-		final String streak = ChatColor.GRAY + "[" + ChatColor.BLUE + "STREAK" + ChatColor.GRAY + "] ";
-		int numberOfKills = 0;
+		//final String kill = ChatColor.WHITE + "[" + ChatColor.AQUA + "KILL" + ChatColor.WHITE + "] ";
+		//final String streak = ChatColor.GRAY + "[" + ChatColor.BLUE + "STREAK" + ChatColor.GRAY + "] ";
+		e.getDrops().clear();
+		olyWar.die(e.getEntity(), olyw);
+		e.setDroppedExp(0);
+		System.out.println(olyWar.getLives(e.getEntity()));
+		/*int numberOfKills = 0;
 		final Entity killer = e.getEntity().getKiller();
 		final Player killed = e.getEntity();
 		if(olyWar.getTeam(killed) != null){
@@ -114,13 +118,14 @@ public class DeathListener implements Listener{
 			if(numberOfKills >= 7) message = "We got a massacre on our hands!";
 			if (message != null) Bukkit.getServer().broadcastMessage(streak + ChatColor.DARK_GRAY + message);
 
-			final int pointsBefore = olyWar.getScore(killed);
+			int pointsBefore = 0;
+			try{pointsBefore = olyWar.getScore(killed);}catch(Exception e1){}
 
 			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You got " + cc1 + pointsBefore + ChatColor.GOLD + " points during this life as a " + cc1 + olyWar.getClass(killed).getName());
-			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You now have " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points with that class and " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points total");
+			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You now have " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points and " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points total");
 			olyWar.die(killed, olyw);
 			Inventory i = killed.getInventory();
 			i.setContents(null);
-		}
+		}*/
 	}
 }

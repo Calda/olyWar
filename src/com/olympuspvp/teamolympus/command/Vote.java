@@ -22,26 +22,22 @@ public class Vote {
 			if(args.length != 1){
 				p.sendMessage(ChatColor.GRAY + "Incorrect Usage: /vote [yes/no/results]");
 			}else{
-				if(voted.contains(olyWar.getName(p))){
-					if(args[0].contains("y")){
+				if(args[0].contains("y")){
+					if(!voted.contains(olyWar.getName(p))){
 						yes++;
 						voted.add(olyWar.getName(p));
 						p.sendMessage(olyWar.getLogo() + "You have voted yes");
-					}else if(args[0].contains("n")){
+					}else p.sendMessage(ChatColor.GRAY + "You may not vote multiple times.");
+				}else if(args[0].contains("n")){
+					if(!voted.contains(olyWar.getName(p))){
 						no++;
 						voted.add(olyWar.getName(p));
-						p.sendMessage(olyWar.getLogo() + "You have votes no");
-					}else if(!args[0].equalsIgnoreCase("results")) p.sendMessage(ChatColor.GRAY + "Incorrect Usage: /vote [yes/no/results]");
-				}else{
-					p.sendMessage(ChatColor.GRAY + "You may not vote multiple times.");
-				}
-				if(args[0].equalsIgnoreCase("results")){
+						p.sendMessage(olyWar.getLogo() + "You have voted no");
+					}else p.sendMessage(ChatColor.GRAY + "You may not vote multiple times.");
+				}else if(args[0].equalsIgnoreCase("results")){
 					p.sendMessage(olyWar.getLogo() + "Current Results: "+ yes + " Yes/ " + no + " No");
-				}else{
-					p.sendMessage(ChatColor.GRAY + "Incorrect Usage: /vote [yes/no/results]");
-				}
+				}else p.sendMessage(ChatColor.GRAY + "Incorrect Usage: /vote [yes/no/results]");
 			}
-
 		}else{
 			p.sendMessage(olyWar.getLogo() + "There is no vote in progress.");
 		}

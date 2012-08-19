@@ -16,7 +16,6 @@ import com.olympuspvp.teamolympus.Item.Unlockable;
 import com.olympuspvp.teamolympus.chat.Tag;
 import com.olympuspvp.teamolympus.type.ClassType;
 
-@SuppressWarnings("unused")
 public class WarConfig{
 
 	private static FileConfiguration config;
@@ -38,7 +37,12 @@ public class WarConfig{
 		final String World = config.getString("spawn.world");
 		final float pitch = config.getInt("spawn.pitch");
 		final float yaw = config.getInt("spawn.yaw");
-		final Location loc = new Location(Bukkit.getWorlds().get(1), x, y, z, pitch, yaw);
+		World w = null;
+		final List<World> ws = Bukkit.getWorlds();
+		for(World world : ws){
+			if(world.getName() == World) w = world;
+		} if(w == null) w = ws.get(0);
+		final Location loc = new Location(w, x, y, z, pitch, yaw);
 		return loc;
 	}
 
@@ -49,7 +53,12 @@ public class WarConfig{
 		final String World = config.getString("maps.map" + mapNumber + ".red.world");
 		final float pitch = config.getInt("maps.map" + mapNumber + ".red.pitch");
 		final float yaw = config.getInt("maps.map" + mapNumber + ".red.yaw");
-		final Location loc = new Location(Bukkit.getWorlds().get(1), x, y, z, pitch, yaw);
+		World w = null;
+		final List<World> ws = Bukkit.getWorlds();
+		for(World world : ws){
+			if(world.getName() == World) w = world;
+		} if(w == null) w = ws.get(0);
+		final Location loc = new Location(w, x, y, z, pitch, yaw);
 		return loc;
 	}
 
@@ -60,7 +69,12 @@ public class WarConfig{
 		final String World = config.getString("maps.map" + mapNumber + ".blue.world");
 		final float pitch = config.getInt("maps.map" + mapNumber + ".blue.pitch");
 		final float yaw = config.getInt("maps.map" + mapNumber + ".blue.yaw");
-		final Location loc = new Location(Bukkit.getWorlds().get(1), x, y, z, pitch, yaw);
+		World w = null;
+		final List<World> ws = Bukkit.getWorlds();
+		for(World world : ws){
+			if(world.getName() == World) w = world;
+		} if(w == null) w = ws.get(0);
+		final Location loc = new Location(w, x, y, z, pitch, yaw);
 		return loc;
 	}
 
@@ -148,6 +162,7 @@ public class WarConfig{
 		olyWar.loadData(p).set("Unlocks.Weapons.Preference" , u.getItemType().name());
 	}
 
+	@SuppressWarnings("deprecation")
 	public static Unlockable getWeaponPreference(final Player p, final ClassType ct){
 		String pref;
 		if(ct == ClassType.PALADIN) pref = olyWar.loadData(p).getString("Unlocks.Weapons.Preference.Paladin");

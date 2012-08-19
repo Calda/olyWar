@@ -3,7 +3,6 @@ package com.olympuspvp.teamolympus.Item;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Wolf;
 
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.game.Team;

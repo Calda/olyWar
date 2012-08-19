@@ -3,7 +3,9 @@ package com.olympuspvp.teamolympus.game;
 import org.bukkit.ChatColor;
 
 public enum Team{
-	RED(ChatColor.RED + "Red", ChatColor.DARK_RED), BLUE(ChatColor.BLUE + "Blue", ChatColor.DARK_RED);
+	RED(ChatColor.RED + "Red", ChatColor.DARK_RED), 
+	BLUE(ChatColor.BLUE + "Blue", ChatColor.DARK_RED),
+	NONE(ChatColor.GRAY + "Spectator", ChatColor.GRAY);
 
 	String name;
 	ChatColor cc;
@@ -22,6 +24,7 @@ public enum Team{
 
 	public Team getOpposite(){
 		if(this == Team.RED) return Team.BLUE;
-		else return Team.RED;
+		else if(this == Team.BLUE) return Team.RED;
+		else return Team.NONE;
 	}
 }
