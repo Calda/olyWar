@@ -10,6 +10,7 @@ import net.minecraft.server.EntityTracker;
 import net.minecraft.server.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -41,6 +42,8 @@ import com.olympuspvp.teamolympus.game.NoSprint;
 import com.olympuspvp.teamolympus.game.Runtime;
 import com.olympuspvp.teamolympus.game.Team;
 import com.olympuspvp.teamolympus.game.TeamPref;
+import com.olympuspvp.teamolympus.scheduler.Heartbeat;
+import com.olympuspvp.teamolympus.scheduler.KOTHbeat;
 import com.olympuspvp.teamolympus.type.ClassType;
 
 public class olyWar extends JavaPlugin{
@@ -55,6 +58,8 @@ public class olyWar extends JavaPlugin{
 	public static int bluePlayersAlive = 0;
 	public static String mapType;
 	public static String mapName;
+	public static Chunk point1;
+	public static Chunk point2;
 	final public static String map = ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "MAP" + ChatColor.DARK_GRAY + "] " + ChatColor.GOLD;
 
 	public static HashMap<String, Team> teams = new HashMap<String, Team>();
@@ -97,51 +102,8 @@ public class olyWar extends JavaPlugin{
 		final EntityHealthRegain EHR = new EntityHealthRegain();
 		Bukkit.getServer().getPluginManager().registerEvents(EHR, this);
 
-		// HEARTBEAT
-		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
-
-			@Override
-			public void run(){
-				//if(olyWar.gameIsActive){
-				final Player[] players = Bukkit.getOnlinePlayers();
-				if(players.length > 0){
-					for(final Player p : players){
-						if(olyWar.getClass(p) == ClassType.PALADIN){
-							int health = p.getHealth();
-							if(health != ClassType.PALADIN.getMaxHealth()) p.setHealth(health+1);
-						}if(olyWar.getClass(p) == ClassType.ASSASSIN){
-							if(invisible.contains(getName(p))){
-								int mana = p.getFoodLevel();
-								if(mana != 0) p.setFoodLevel(mana - 1);
-								else CloakInteract.visible(p);
-							}else{
-								int mana = p.getFoodLevel();
-								if(mana != 20) p.setFoodLevel(mana + 2);
-							}
-						}else{
-							int mana = p.getFoodLevel();
-							System.out.println(mana);
-							if(mana != 20) p.setFoodLevel(mana + 1);
-						}
-					}
-				}
-				//}
-			}
-		}, 15L, 15L);
-		//Autobalance Ticks
-		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
-			@Override
-			public void run(){
-				AutoBalance.run(true);
-			}
-		}, 3*60*20L, 3*60*20L);
-		//NoSprint
-		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
-			@Override
-			public void run(){
-				NoSprint.check();
-			}
-		}, 3L,3L);
+		Heartbeat.start(this);
+		KOTHbeat.start(this);
 	}
 	@Override
 	public boolean onCommand(final CommandSender s, final Command cc, final String cl, final String[] args){

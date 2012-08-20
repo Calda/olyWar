@@ -49,11 +49,11 @@ public class Runtime{
 				olyWar.mapType = mapType;
 			}
 
-			if(mapType.equals("Attack/Defend") || mapType.equalsIgnoreCase("King of the Hill")){
-				point1 = WarConfig.getChunk1(chosenMap);
-				point2 = WarConfig.getChunk2(chosenMap);
-				if(point1 == null) brokenMap = true;
-				else if(point2 == null && mapType.equals("Attack/Defend")) brokenMap = true;
+			if(mapType.equals("Attack/Defend") || mapType.equalsIgnoreCase("KOTH")){
+				olyWar.point1 = WarConfig.getChunk1(chosenMap);
+				olyWar.point2 = WarConfig.getChunk2(chosenMap);
+				if(olyWar.point1 == null) brokenMap = true;
+				else if(olyWar.point2 == null && mapType.equals("Attack/Defend")) brokenMap = true;
 			}
 			loops++;
 		}while(brokenMap);
@@ -87,7 +87,7 @@ public class Runtime{
 							olyWar.applyClass(p);
 						}
 						
-						olyWar.gameIsActive = true; //GAME IS ACTIVE\\
+						olyWar.gameIsActive = true;
 						
 					}else{
 						startGame(ow);
