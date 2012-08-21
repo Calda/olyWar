@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.command.Vote;
 import com.olympuspvp.teamolympus.configuration.WarConfig;
+import com.olympuspvp.teamolympus.scheduler.KOTHbeat;
 
 public class Runtime{
 	final static Server s = Bukkit.getServer();
@@ -55,6 +56,7 @@ public class Runtime{
 				if(olyWar.point1 == null) brokenMap = true;
 				else if(olyWar.point2 == null && mapType.equals("Attack/Defend")) brokenMap = true;
 			}
+			
 			loops++;
 		}while(brokenMap);
 
@@ -88,6 +90,8 @@ public class Runtime{
 						}
 						
 						olyWar.gameIsActive = true;
+						System.out.println("gameIsActive");
+						System.out.println(olyWar.mapType);
 						
 					}else{
 						startGame(ow);
@@ -119,17 +123,11 @@ public class Runtime{
 		olyWar.gameIsActive = false;
 		startGame(ow);
 	}
-
-	public static void gameOverAD(){
-
-	}public static void gameOverKOTH(){
-
-	}
 	public static void killAll(final olyWar ow){
 		olyWar.hasLeftGame.clear();
 		for(final Player p : s.getOnlinePlayers()){
 			if(olyWar.getLives(p) != 0){
-				olyWar.die(p, ow);
+				p.getInventory().clear();
 				p.teleport(olyWar.spawn, TeleportCause.PLUGIN);
 			}
 		}

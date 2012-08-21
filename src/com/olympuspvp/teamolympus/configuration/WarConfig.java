@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.CraftChunk;
+import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.entity.Player;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.Item.Unlockable;
@@ -90,7 +91,8 @@ public class WarConfig{
 		final World world = Bukkit.getWorld(config.getString("maps.map" + mapNumber + ".Chunk1.world"));
 		final int x = config.getInt("maps.map" + mapNumber + ".Chunk1.x");
 		final int y = config.getInt("maps.map" + mapNumber + ".Chunk1.y");
-		net.minecraft.server.Chunk chnk = new net.minecraft.server.Chunk((net.minecraft.server.World) world, x, y);
+		CraftWorld cw = (CraftWorld) world;
+		net.minecraft.server.Chunk chnk = new net.minecraft.server.Chunk(cw.getHandle(), x, y);
 		CraftChunk cchunk = new CraftChunk((net.minecraft.server.Chunk) chnk);
 		Chunk chunk = cchunk;
 		return chunk;
@@ -100,7 +102,8 @@ public class WarConfig{
 		final World world = Bukkit.getWorld(config.getString("maps.map" + mapNumber + ".Chunk1.world"));
 		final int x = config.getInt("maps.map" + mapNumber + ".Chunk1.x");
 		final int y = config.getInt("maps.map" + mapNumber + ".Chunk1.y");
-		net.minecraft.server.Chunk chnk = new net.minecraft.server.Chunk((net.minecraft.server.World) world, x, y);
+		CraftWorld cw = (CraftWorld) world;
+		net.minecraft.server.Chunk chnk = new net.minecraft.server.Chunk(cw.getHandle(), x, y);
 		CraftChunk cchunk = new CraftChunk((net.minecraft.server.Chunk) chnk);
 		Chunk chunk = cchunk;
 		return chunk;

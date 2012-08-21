@@ -34,7 +34,6 @@ public class Heartbeat {
 							}
 						}else{
 							int mana = p.getFoodLevel();
-							System.out.println(mana);
 							if(mana != 20) p.setFoodLevel(mana + 1);
 						}
 					}
