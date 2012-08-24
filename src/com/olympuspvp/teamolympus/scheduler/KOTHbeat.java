@@ -18,24 +18,32 @@ public class KOTHbeat {
 
 	public static int percentageRed = 0;
 	public static Team owningTeam = Team.NONE;
-	public static int redTime = 64;
-	public static int blueTime = 64;
+	public static int redTime = 60;
+	public static int blueTime = 60;
 	public static Server s = Bukkit.getServer();
 	private static olyWar ow = null;
+	private static boolean started = false;
 
 	public static void start(final olyWar olyw){
 		ow = olyw;
+		percentageRed = 0;
+		redTime = 60;
+		blueTime = 60;
+		started = false;
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(ow, new Runnable(){
-			@SuppressWarnings("deprecation")
 			@Override
 			public void run(){
 				if(olyWar.gameIsActive && olyWar.mapType.equals("KOTH")){
-					int red = 0;
+					if(!started){
+						started = true;
+						setOwner(Team.NONE);
+					}int red = 0;
 					int blue = 0;
 					for(final Entity e : olyWar.point1.getEntities()){
 						if(e instanceof Player){
 							final Player p = (Player) e;
-							if(p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WOOL){
+							Material m = p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType();
+							if(m == Material.WOOL || m == Material.NETHERRACK || m == Material.LAPIS_BLOCK){
 								final Team t = olyWar.getTeam(p);
 								if(t == Team.RED) red++;
 								else if(t == Team.BLUE) blue++;
@@ -62,14 +70,13 @@ public class KOTHbeat {
 									if(percentageRed > 0) i.setItem(8, new ItemStack(Material.NETHERRACK, percentageRed));
 									else i.setItem(8, new ItemStack(Material.LAPIS_BLOCK, -percentageRed));
 								}
-							}p.updateInventory();
+							}//p.updateInventory();
 					}
 				}
 			}
-		}, 20*30L, 3L);
+		}, 0L, 3L);
 
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(ow, new Runnable(){
-			@SuppressWarnings("deprecation")
 			@Override
 			public void run(){
 				if(olyWar.gameIsActive && olyWar.mapType.equals("KOTH")){
@@ -89,7 +96,7 @@ public class KOTHbeat {
 							final Inventory i = p.getInventory();
 							i.setItem(7, new ItemStack(Material.NETHERRACK, redTime));
 							i.setItem(6, new ItemStack(Material.LAPIS_BLOCK, blueTime));
-							p.updateInventory();
+							//p.updateInventory();
 						}
 					}
 				}
@@ -99,6 +106,7 @@ public class KOTHbeat {
 	}
 
 	public static void gameOver(){
+		started = false;
 		s.broadcastMessage(olyWar.map + "And that's the game!");
 		final Team opp = owningTeam.getOpposite();
 		s.broadcastMessage(olyWar.map + owningTeam.getColor() + " Team " + owningTeam.getName() + ChatColor.GOLD + "defeated" + opp.getColor() + " Team " + opp.getName());
@@ -112,14 +120,18 @@ public class KOTHbeat {
 	}
 
 	private static void setOwner(final Team t){
+		if(t == Team.RED) Bukkit.getServer().broadcastMessage(olyWar.map + ChatColor.RED + "Team Red " + ChatColor.GOLD + 
+				"took the point and has " + ChatColor.YELLOW + redTime*3 + " seconds " + ChatColor.GOLD + "remaining.");
+		if(t == Team.BLUE) Bukkit.getServer().broadcastMessage(olyWar.map + ChatColor.BLUE + "Team Blue " + ChatColor.GOLD + 
+				"took the point and has " + ChatColor.YELLOW + blueTime*3 + " seconds " + ChatColor.GOLD + "remaining.");
 		owningTeam = t;
 		percentageRed = 0;
-		for(int x = 0; x > 16; x++){
-			for(int y = 0; y >= 128; y++){
-				for(int z = 0; z > 16; z++){
+		for(int x = 0; x <= 16; x++){
+			for(int y = 0; y <= 128; y++){
+				for(int z = 0; z <= 16; z++){
 					final Block b = olyWar.point1.getBlock(x,y,z);
-					System.out.println(b.getType().toString());
-					if(b.getType() == Material.WOOL || b.getType() == Material.NETHERRACK || b.getType() == Material.LAPIS_BLOCK){
+					final Material m = b.getType();
+					if(m == Material.WOOL || m == Material.NETHERRACK || m == Material.LAPIS_BLOCK){
 						if(t == Team.RED) b.setType(Material.NETHERRACK);
 						if(t == Team.BLUE) b.setType(Material.LAPIS_BLOCK);
 						if(t == Team.NONE) b.setType(Material.WOOL);

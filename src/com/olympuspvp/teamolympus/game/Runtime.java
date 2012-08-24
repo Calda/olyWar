@@ -3,7 +3,6 @@ package com.olympuspvp.teamolympus.game;
 import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -11,7 +10,6 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.command.Vote;
 import com.olympuspvp.teamolympus.configuration.WarConfig;
-import com.olympuspvp.teamolympus.scheduler.KOTHbeat;
 
 public class Runtime{
 	final static Server s = Bukkit.getServer();
@@ -23,16 +21,14 @@ public class Runtime{
 		int chosenMap;
 		String mapName;
 		String mapType;
-		Chunk point1;
-		Chunk point2;
 
 		boolean brokenMap = false;
 		int loops = 0;
 		do{
 			chosenMap = r.nextInt(numberOfMaps);
 			chosenMap++;
-			Location redSpawn = WarConfig.getRedSpawn(chosenMap);
-			Location blueSpawn = WarConfig.getBlueSpawn(chosenMap);
+			final Location redSpawn = WarConfig.getRedSpawn(chosenMap);
+			final Location blueSpawn = WarConfig.getBlueSpawn(chosenMap);
 			mapName = WarConfig.getMapName(chosenMap);
 			mapType = WarConfig.getMapType(chosenMap);
 			if(mapName == null || mapType == null || blueSpawn == null || redSpawn == null){
@@ -56,7 +52,7 @@ public class Runtime{
 				if(olyWar.point1 == null) brokenMap = true;
 				else if(olyWar.point2 == null && mapType.equals("Attack/Defend")) brokenMap = true;
 			}
-			
+
 			loops++;
 		}while(brokenMap);
 
@@ -64,14 +60,14 @@ public class Runtime{
 			final String mt = mapType;
 			final String mn = mapName;
 			Vote.openVote();
-			s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mapType + " " + ChatColor.DARK_GREEN + mapName + ChatColor.GOLD + " in 30 seconds.");
-			s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");
+			s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mapType + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mapName + ChatColor.GOLD + " in 30 seconds.");
+			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");
 			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 20 seconds.");
-			s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 10*20L);
+			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");}}, 10*20L);
 			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 10 seconds.");
-			s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 20*20L);
+			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");}}, 20*20L);
 			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 5 seconds.");
-			s.broadcastMessage(map + "Use the command /vote [yes/no/results] to vote!");}}, 25*20L);
+			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");}}, 25*20L);
 			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){
 				@Override
 				public void run(){
@@ -88,11 +84,9 @@ public class Runtime{
 							olyWar.spawnPlayer(p);
 							olyWar.applyClass(p);
 						}
-						
+
 						olyWar.gameIsActive = true;
-						System.out.println("gameIsActive");
-						System.out.println(olyWar.mapType);
-						
+
 					}else{
 						startGame(ow);
 					}
@@ -100,11 +94,11 @@ public class Runtime{
 			}, 30*20L);
 		}
 	}
-	
+
 	public static void gameOverTDM(final olyWar ow){
-		
+
 		olyWar.gameIsActive = false;
-		
+
 		final int redAlive = olyWar.redPlayersAlive;
 		final int blueAlive = olyWar.bluePlayersAlive;
 

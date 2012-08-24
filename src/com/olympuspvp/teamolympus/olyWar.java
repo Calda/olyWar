@@ -25,7 +25,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import com.olympuspvp.teamolympus.Item.CloakInteract;
 import com.olympuspvp.teamolympus.Item.InteractionListener;
 import com.olympuspvp.teamolympus.Item.ItemType;
 import com.olympuspvp.teamolympus.Item.PortalInteract;
@@ -37,8 +36,6 @@ import com.olympuspvp.teamolympus.damage.DamageListener;
 import com.olympuspvp.teamolympus.damage.DeathListener;
 import com.olympuspvp.teamolympus.damage.EntityHealthRegain;
 import com.olympuspvp.teamolympus.damage.RespawnListener;
-import com.olympuspvp.teamolympus.game.AutoBalance;
-import com.olympuspvp.teamolympus.game.NoSprint;
 import com.olympuspvp.teamolympus.game.Runtime;
 import com.olympuspvp.teamolympus.game.Team;
 import com.olympuspvp.teamolympus.game.TeamPref;
@@ -76,10 +73,6 @@ public class olyWar extends JavaPlugin{
 	public static Location currentBlueSpawn = null;
 
 	@Override
-	public void onDisable(){
-	}
-
-	@Override
 	public void onEnable(){
 		WarConfig.loadConfig();
 		Runtime.startGame(this);
@@ -105,6 +98,7 @@ public class olyWar extends JavaPlugin{
 		Heartbeat.start(this);
 		KOTHbeat.start(this);
 	}
+	
 	@Override
 	public boolean onCommand(final CommandSender s, final Command cc, final String cl, final String[] args){
 		Manager.run(s, cl, args, this);
@@ -150,8 +144,6 @@ public class olyWar extends JavaPlugin{
 
 	public static void setTeam(final Player p, final Team t){
 		teams.put(getName(p), t);
-		final CraftPlayer cp = (CraftPlayer) p;
-		cp.getHandle().name = t.getColor() + getName(p);
 	}
 
 	public static void leaveTeam(final Player p){
@@ -222,23 +214,23 @@ public class olyWar extends JavaPlugin{
 		kills.remove(getName(p));
 		for(final PotionEffect pe : p.getActivePotionEffects()){
 			p.removePotionEffect(pe.getType());
-		} final ClassType ct = getClass(p);
+		}final ClassType ct = getClass(p);
 		int ctkills = WarConfig.getClassScore(p, ct);
 		int totalkills = WarConfig.getScore(p);
 		totalkills++; ctkills++;
 		WarConfig.setClassScore(p, ct, ctkills);
 		WarConfig.setScore(p, totalkills);
-		int numlives = getLives(p);
-		numlives--;
-		if(numlives > 0) lives.put(getName(p), numlives);
-		if(numlives == 0){
-			lives.remove(getName(p));
-			playersAlive--;
-			if(olyWar.getTeam(p) == Team.RED) redPlayersAlive--;
-			else bluePlayersAlive--;
+		if(olyWar.mapType == "TDM"){
+			int numlives = getLives(p);
+			numlives--;
+			if(numlives > 0) lives.put(getName(p), numlives);
+			if(numlives == 0){
+				lives.remove(getName(p));
+				playersAlive--;
+				if(olyWar.getTeam(p) == Team.RED) redPlayersAlive--;
+				else bluePlayersAlive--;
+			}if(redPlayersAlive == 0 || bluePlayersAlive == 0) Runtime.gameOverTDM(ow);
 		}
-
-		if(redPlayersAlive == 0 || bluePlayersAlive == 0) Runtime.gameOverTDM(ow);
 	}
 
 	public static void applyClass(final Player p){
@@ -259,13 +251,14 @@ public class olyWar extends JavaPlugin{
 			i.setItem(2,new ItemStack(ItemType.CLOAK.getMaterial()));
 			i.setItem(3,new ItemStack(ItemType.POTION_HEALTH.getMaterial()));
 			i.setItem(4,new ItemStack(ItemType.POTION_HEALTH.getMaterial()));
-			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10*60*20, 4));
-			p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 10*60*20, 4));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10*60*20, 3));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 10*60*20, 3));
 		}else if(ct == ClassType.BERSERKER){
 			i.setItem(0,new ItemStack(ItemType.WAR_AXE.getMaterial()));
 			i.setItem(1,new ItemStack(ItemType.POTION_HEALTH.getMaterial()));
 			i.setItem(2,new ItemStack(ItemType.POTION_HEALTH.getMaterial()));
 			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10*60*20, 3));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 10*60*20, 1));
 		}else if(ct == ClassType.CLERIC){
 			i.setItem(0,new ItemStack(ItemType.STAFF_HEALING.getMaterial()));
 		}else if(ct == ClassType.HUNTSMAN){
@@ -284,6 +277,7 @@ public class olyWar extends JavaPlugin{
 			i.setItem(3,new ItemStack(ItemType.POTION_HEALTH.getMaterial()));
 		}else if(ct == ClassType.PALADIN){
 			i.setItem(0,new ItemStack(ItemType.SWORD_LONG.getMaterial()));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10*60*20, 1));
 		}else if(ct == ClassType.RANGER){
 			i.setItem(0,new ItemStack(ItemType.BOW.getMaterial()));
 			i.setItem(1,new ItemStack(ItemType.ARROW.getMaterial(),ItemType.ARROW.getAmount()));
@@ -307,6 +301,12 @@ public class olyWar extends JavaPlugin{
 			i.setItem(0,new ItemStack(ItemType.SWORD_SHORT.getMaterial()));
 			i.setItem(1,new ItemStack(ItemType.POTION_HEALTH.getMaterial()));
 			i.setItem(2,new ItemStack(ItemType.POTION_HEALTH.getMaterial()));
+		}else if(ct == ClassType.INFILTRATOR){
+			i.setItem(0,new ItemStack(ItemType.STAFF_BLINK.getMaterial()));
+			i.setItem(1,new ItemStack(ItemType.PORTAL.getMaterial()));
+			i.setItem(2,new ItemStack(ItemType.PORTAL.getMaterial()));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10*60*20, 3));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 10*60*20, 3));
 		}
 	}
 
@@ -322,16 +322,16 @@ public class olyWar extends JavaPlugin{
 			p.teleport(blueSpawn, TeleportCause.PLUGIN);
 			p.getInventory().setHelmet(new ItemStack(Material.LAPIS_BLOCK));
 		}if(t != Team.NONE){
-			p.sendMessage(map + "You have spawned in " + ChatColor.GREEN + mapType + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mapName + ChatColor.GOLD + " as " + ct.getArticle() + " " + t.getColor() + ct.getName());
+			p.sendMessage(map + "You have spawned as " + ct.getArticle() + " " + t.getColor() + ct.getName());
 			olyWar.setLives(p, 3);
 		}
 	}
 
 	public static void setPlayerName(final EntityPlayer player, final String newname){
-		final WorldServer world = (WorldServer) player.world;
+		/*final WorldServer world = (WorldServer) player.world;
 		final EntityTracker tracker = world.tracker;
 		tracker.untrackEntity(player);
 		player.name = newname;
-		tracker.track(player);
+		tracker.track(player);*/
 	}
 }

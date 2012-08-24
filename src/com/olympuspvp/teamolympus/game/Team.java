@@ -3,8 +3,8 @@ package com.olympuspvp.teamolympus.game;
 import org.bukkit.ChatColor;
 
 public enum Team{
-	RED(ChatColor.RED + "Red", ChatColor.DARK_RED, (byte) 14), 
-	BLUE(ChatColor.BLUE + "Blue", ChatColor.DARK_RED, (byte) 11),
+	RED(ChatColor.RED + "Red", ChatColor.RED, (byte) 14), 
+	BLUE(ChatColor.BLUE + "Blue", ChatColor.BLUE, (byte) 11),
 	NONE(ChatColor.GRAY + "Spectator", ChatColor.GRAY, (byte) 0);
 
 	String name;

@@ -7,6 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.potion.PotionEffect;
+
 import com.olympuspvp.teamolympus.olyWar;
 
 public class LoginListener implements Listener{
@@ -15,6 +17,9 @@ public class LoginListener implements Listener{
 	public void onPlayerLogin(final PlayerJoinEvent e){
 		e.setJoinMessage(null);
 		final Player p = e.getPlayer();
+		for(final PotionEffect pe : p.getActivePotionEffects()){
+			p.removePotionEffect(pe.getType());
+		}p.getInventory().clear();
 		p.teleport(olyWar.spawn, TeleportCause.PLUGIN);
 		if(p.hasPlayedBefore()){
 			p.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "Welcome back to Realms PVP");

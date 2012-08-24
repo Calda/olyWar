@@ -1,9 +1,12 @@
 package com.olympuspvp.teamolympus.type;
 
-public enum ClassType {
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
+public enum ClassType {
+	
 	ROUGE("Rouge", 10, "a"),
-	INFILTRATOR("Infiltrator", 8, "a"),
+	INFILTRATOR("Infiltrator", 8, "an"),
 	ASSASSIN("Assassin", 12, "an"),
 	WARRIOR("Warrior", 18, "a"),
 	BERSERKER("Berserker", 10, "a"),
@@ -35,6 +38,29 @@ public enum ClassType {
 	
 	public String getArticle(){
 		return article;
+	}
+	
+	public ItemStack[] getArmorContents(){
+		ItemStack[] is = new ItemStack[4];
+		if(this == ROUGE || this == INFILTRATOR || this == ASSASSIN){
+			is[0] = new ItemStack(Material.CHAINMAIL_HELMET);
+			is[1] = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+			is[2] = new ItemStack(Material.CHAINMAIL_LEGGINGS);
+			is[3] = new ItemStack(Material.CHAINMAIL_BOOTS);
+		}else if(this == ARCHER || this == HUNTSMAN || this == RANGER){
+			is[0] = new ItemStack(Material.LEATHER_HELMET);
+			is[1] = new ItemStack(Material.LEATHER_CHESTPLATE);
+			is[2] = new ItemStack(Material.LEATHER_LEGGINGS);
+			is[3] = new ItemStack(Material.LEATHER_BOOTS);
+		}else if(this == WARRIOR || this == BERSERKER || this == PALADIN){
+			is[0] = new ItemStack(Material.LEATHER_HELMET);
+			is[1] = new ItemStack(Material.LEATHER_CHESTPLATE);
+			is[2] = new ItemStack(Material.LEATHER_LEGGINGS);
+			is[3] = new ItemStack(Material.LEATHER_BOOTS);
+		}
+		
+		return is;
+	
 	}
 
 }

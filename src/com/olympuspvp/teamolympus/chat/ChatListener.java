@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.configuration.WarConfig;
 
+@SuppressWarnings("deprecation")
 public class ChatListener implements Listener{
 	
 	@EventHandler

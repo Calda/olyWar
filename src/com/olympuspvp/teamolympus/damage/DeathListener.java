@@ -1,6 +1,6 @@
 package com.olympuspvp.teamolympus.damage;
 
-import java.util.Random;
+/*import java.util.Random;
 import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,15 +9,15 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Tameable;
+import org.bukkit.entity.Tameable;*/
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.Inventory;
+//import org.bukkit.inventory.Inventory;
 
 import com.olympuspvp.teamolympus.olyWar;
-import com.olympuspvp.teamolympus.configuration.WarConfig;
+//import com.olympuspvp.teamolympus.configuration.WarConfig;
 
 
 public class DeathListener implements Listener{
@@ -36,7 +36,6 @@ public class DeathListener implements Listener{
 		e.getDrops().clear();
 		olyWar.die(e.getEntity(), olyw);
 		e.setDroppedExp(0);
-		System.out.println(olyWar.getLives(e.getEntity()));
 		/*int numberOfKills = 0;
 		final Entity killer = e.getEntity().getKiller();
 		final Player killed = e.getEntity();

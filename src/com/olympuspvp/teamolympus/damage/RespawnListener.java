@@ -25,11 +25,11 @@ public class RespawnListener implements Listener{
 				final Team t = olyWar.getTeam(p);
 				final ClassType ct = olyWar.getClass(p);
 				if(t == Team.RED){
-					olyWar.setPlayerName(((CraftPlayer)p).getHandle(), ChatColor.RED + olyWar.getName(p));
+					//olyWar.setPlayerName(((CraftPlayer)p).getHandle(), ChatColor.RED + olyWar.getName(p));
 					e.setRespawnLocation(olyWar.redSpawn);
 					p.getInventory().setHelmet(new ItemStack(Material.NETHERRACK));
 				}if(t == Team.BLUE){
-					olyWar.setPlayerName(((CraftPlayer)p).getHandle(), ChatColor.BLUE + olyWar.getName(p));
+					//olyWar.setPlayerName(((CraftPlayer)p).getHandle(), ChatColor.BLUE + olyWar.getName(p));
 					e.setRespawnLocation(olyWar.blueSpawn);
 					p.getInventory().setHelmet(new ItemStack(Material.LAPIS_BLOCK));
 				}if(t != Team.NONE){

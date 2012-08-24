@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import com.olympuspvp.teamolympus.damage.DamageListener;
 
 public class StaffLightningInteract {
 
@@ -18,9 +19,8 @@ public class StaffLightningInteract {
 		final LightningStrike l = p.getWorld().strikeLightning(loc);
 		final List<Entity> nearby = l.getNearbyEntities(5, 5, 5);
 		for(final Entity e2 : nearby){
-			if(e2 instanceof LivingEntity){
-				final LivingEntity le = (LivingEntity) e2;
-				le.damage(8, p);
+			if(!DamageListener.onSameTeam(p, e2)){
+				if(e2 instanceof LivingEntity) ((LivingEntity)e2).damage(8, p);
 			}
 		}
 

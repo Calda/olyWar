@@ -1,6 +1,5 @@
 package com.olympuspvp.teamolympus.configuration;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -15,11 +14,8 @@ public class LogoutListener implements Listener{
 	@EventHandler
 	public void onPlayerLogin(final PlayerQuitEvent e){
 		e.setQuitMessage(null);
-		final Player p = e.getPlayer();
-		olyWar.leaveClass(p);
-		olyWar.leaveTeam(p);
-		olyWar.die(p, ow);
-		p.getInventory().setContents(null);
+		olyWar.leaveClass(e.getPlayer());
+		olyWar.leaveTeam(e.getPlayer());
 	}
 
 }
