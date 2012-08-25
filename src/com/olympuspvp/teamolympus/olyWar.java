@@ -39,6 +39,7 @@ import com.olympuspvp.teamolympus.damage.RespawnListener;
 import com.olympuspvp.teamolympus.game.Runtime;
 import com.olympuspvp.teamolympus.game.Team;
 import com.olympuspvp.teamolympus.game.TeamPref;
+import com.olympuspvp.teamolympus.scheduler.ADbeat;
 import com.olympuspvp.teamolympus.scheduler.Heartbeat;
 import com.olympuspvp.teamolympus.scheduler.KOTHbeat;
 import com.olympuspvp.teamolympus.type.ClassType;
@@ -97,6 +98,7 @@ public class olyWar extends JavaPlugin{
 
 		Heartbeat.start(this);
 		KOTHbeat.start(this);
+		ADbeat.start(this);
 	}
 	
 	@Override

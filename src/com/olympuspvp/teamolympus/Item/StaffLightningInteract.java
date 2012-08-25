@@ -20,7 +20,7 @@ public class StaffLightningInteract {
 		final List<Entity> nearby = l.getNearbyEntities(5, 5, 5);
 		for(final Entity e2 : nearby){
 			if(!DamageListener.onSameTeam(p, e2)){
-				if(e2 instanceof LivingEntity) ((LivingEntity)e2).damage(8, p);
+				if(e2 instanceof LivingEntity) ((LivingEntity)e2).damage(5, p);
 			}
 		}
 

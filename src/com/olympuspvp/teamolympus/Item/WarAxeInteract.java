@@ -17,7 +17,7 @@ public class WarAxeInteract{
 					if(!p.equals(damager)){
 						Team t1 = olyWar.getTeam(damager);
 						Team t2 = olyWar.getTeam(p);
-						if(t1 != t2) p.damage(3);
+						if(t1 != t2) p.damage(2);
 					}
 				}else ((LivingEntity) ent).damage(3);
 			}

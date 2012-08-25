@@ -18,7 +18,6 @@ public class Vote {
 
 	public static void run(Player p, String[] args){
 		if(voteInProgress){
-
 			if(args.length != 1){
 				p.sendMessage(ChatColor.GRAY + "Incorrect Usage: /vote [yes/no/results]");
 			}else{
@@ -26,20 +25,22 @@ public class Vote {
 					if(!voted.contains(olyWar.getName(p))){
 						yes++;
 						voted.add(olyWar.getName(p));
-						p.sendMessage(olyWar.getLogo() + "You have voted yes");
+						p.sendMessage(olyWar.map + "You have voted " + ChatColor.GREEN + "yes " + ChatColor.GOLD + "for the next map");
+						p.sendMessage(olyWar.map + "Current results are " + ChatColor.GREEN + yes + " yes" + ChatColor.GOLD + "/" + ChatColor.RED + no + " no");
 					}else p.sendMessage(ChatColor.GRAY + "You may not vote multiple times.");
 				}else if(args[0].contains("n")){
 					if(!voted.contains(olyWar.getName(p))){
 						no++;
 						voted.add(olyWar.getName(p));
-						p.sendMessage(olyWar.getLogo() + "You have voted no");
+						p.sendMessage(olyWar.map + "You have voted " + ChatColor.RED + "no " + ChatColor.GOLD + "for the next map");
+						p.sendMessage(olyWar.map + "Current results are " + ChatColor.GREEN + yes + " yes" + ChatColor.GOLD + "/" + ChatColor.RED + no + " no");
 					}else p.sendMessage(ChatColor.GRAY + "You may not vote multiple times.");
 				}else if(args[0].equalsIgnoreCase("results")){
-					p.sendMessage(olyWar.getLogo() + "Current Results: "+ yes + " Yes/ " + no + " No");
+					p.sendMessage(olyWar.map + "Current results are " + ChatColor.GREEN + yes + " yes" + ChatColor.GOLD + "/" + ChatColor.RED + no + " no");
 				}else p.sendMessage(ChatColor.GRAY + "Incorrect Usage: /vote [yes/no/results]");
 			}
 		}else{
-			p.sendMessage(olyWar.getLogo() + "There is no vote in progress.");
+			p.sendMessage(ChatColor.GRAY + "There is no vote in progress.");
 		}
 	}
 
@@ -51,7 +52,7 @@ public class Vote {
 
 	public static boolean getVerdict(){
 		voteInProgress = false;
-		Bukkit.getServer().broadcastMessage(Runtime.map + "Voting results are "+ yes + " Yes/ " + no + " No");
+		Bukkit.getServer().broadcastMessage(Runtime.map + "Voting results are " + ChatColor.GREEN + yes + " yes" + ChatColor.GOLD + "/" + ChatColor.RED + no + " no");
 		if(yes >= no) return true;
 		else return false;
 	}

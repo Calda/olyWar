@@ -54,11 +54,14 @@ public class ChooseClass {
 			}
 
 			if(type != null){
-				p.sendMessage(olyWar.getLogo() + "Your selected class is now " + type);
+				p.sendMessage(olyWar.getLogo() + "Your selected class is now " + ChatColor.YELLOW + type);
 				if(olyWar.getTeam(p) != null){
 					p.sendMessage(olyWar.getLogo() + "Your class will be changed next time you spawn.");
 				}
-			}else p.sendMessage(ChatColor.GRAY + "Incorrect Command Usage. /class [classType]");
+			}else{
+				p.sendMessage(ChatColor.GRAY + "Incorrect Command Usage. /class [classType]");
+				p.sendMessage(ChatColor.GRAY + "/classes for a list of avaliable classes");
+			}
 		}
 
 	}

@@ -31,9 +31,18 @@ public class Manager {
 			}
 			if(cl.equalsIgnoreCase("classes")){
 				StringBuilder sb = new StringBuilder();
+				boolean darkgray = false;
+				int amount = 0;
 				for(ClassType ct : ClassType.values()){
-					sb.append(ct.getName() + "\n");
-				}s.sendMessage(ChatColor.GREEN + "Classes:\n" + ChatColor.GRAY + sb.toString());
+					darkgray = !darkgray;
+					String add = "";
+					if(amount == 3){
+						amount = 0;
+						add = "\n";
+					}if(darkgray) sb.append(ChatColor.DARK_GRAY + ct.getName() + add);
+					if(!darkgray) sb.append(ChatColor.GRAY + ct.getName() + add);
+					amount++;
+				}s.sendMessage(ChatColor.GREEN + "Classes:\n" + sb.toString());
 			}
 			if(cl.equalsIgnoreCase("vote")){
 				Vote.run(p, args);
@@ -49,7 +58,7 @@ public class Manager {
 			}
 			
 		}else{
-			s.sendMessage("You must be in-game to perform commands");
+			s.sendMessage(ChatColor.GRAY + "You must be in-game to perform commands related to this plugin.");
 		}
 	}
 }
