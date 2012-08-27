@@ -45,7 +45,7 @@ public class Runtime{
 				olyWar.mapName = mapName;
 				olyWar.mapType = mapType;
 			}
-
+			if(mapType == null) mapType = "";
 			if(mapType.equals("Attack/Defend") || mapType.equalsIgnoreCase("KOTH")){
 				olyWar.point1 = WarConfig.getChunk1(chosenMap);
 				olyWar.point2 = WarConfig.getChunk2(chosenMap);

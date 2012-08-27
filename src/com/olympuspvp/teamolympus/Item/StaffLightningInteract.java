@@ -18,9 +18,9 @@ public class StaffLightningInteract {
 		final Location loc = tb.getLocation();
 		final LightningStrike l = p.getWorld().strikeLightning(loc);
 		final List<Entity> nearby = l.getNearbyEntities(5, 5, 5);
-		for(final Entity e2 : nearby){
-			if(!DamageListener.onSameTeam(p, e2)){
-				if(e2 instanceof LivingEntity) ((LivingEntity)e2).damage(5, p);
+		for(final Entity e : nearby){
+			if(!DamageListener.onSameTeam(p, e)){
+				if(e instanceof LivingEntity) ((LivingEntity)e).damage(5, p);
 			}
 		}
 

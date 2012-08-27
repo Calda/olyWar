@@ -1,6 +1,6 @@
 package com.olympuspvp.teamolympus.damage;
 
-/*import java.util.Random;
+import java.util.Random;
 import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,15 +9,15 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Tameable;*/
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-//import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.Inventory;
 
 import com.olympuspvp.teamolympus.olyWar;
-//import com.olympuspvp.teamolympus.configuration.WarConfig;
+import com.olympuspvp.teamolympus.configuration.WarConfig;
 
 
 public class DeathListener implements Listener{
@@ -31,12 +31,12 @@ public class DeathListener implements Listener{
 	}
 	@EventHandler
 	public void onPlayerDeath(final PlayerDeathEvent e){
-		//final String kill = ChatColor.WHITE + "[" + ChatColor.AQUA + "KILL" + ChatColor.WHITE + "] ";
-		//final String streak = ChatColor.GRAY + "[" + ChatColor.BLUE + "STREAK" + ChatColor.GRAY + "] ";
+		final String kill = ChatColor.WHITE + "[" + ChatColor.AQUA + "KILL" + ChatColor.WHITE + "] ";
+		final String streak = ChatColor.GRAY + "[" + ChatColor.BLUE + "STREAK" + ChatColor.GRAY + "] ";
 		e.getDrops().clear();
 		olyWar.die(e.getEntity(), olyw);
 		e.setDroppedExp(0);
-		/*int numberOfKills = 0;
+		int numberOfKills = 0;
 		final Entity killer = e.getEntity().getKiller();
 		final Player killed = e.getEntity();
 		if(olyWar.getTeam(killed) != null){
@@ -123,8 +123,6 @@ public class DeathListener implements Listener{
 			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You got " + cc1 + pointsBefore + ChatColor.GOLD + " points during this life as a " + cc1 + olyWar.getClass(killed).getName());
 			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You now have " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points and " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points total");
 			olyWar.die(killed, olyw);
-			Inventory i = killed.getInventory();
-			i.setContents(null);
-		}*/
+		}
 	}
 }

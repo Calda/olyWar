@@ -33,7 +33,7 @@ public enum ItemType{
 	STAFF_LIGHTNING(Material.GOLD_PICKAXE, 1, "Lightning Staff", 20),
 
 	PORTAL(Material.PORTAL, 1, "Portal", 0),
-	PORTAL_CALLBACK(null, 1, "Portal Callback", 20), // NEEDS TO BE CHANGED/
+	PORTAL_CALLBACK(Material.IRON_SPADE, 1, "Portal Callback", 20),
 	CLOAK(Material.LEATHER, 1, "Cloak of Invisibility", 20),
 	POWDER_POISON(Material.POTION, 5, "Poison Powder", 0),
 	THROWING_KNIVES(Material.SNOW_BALL, 64, "Throwing Knives", 0);
