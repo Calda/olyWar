@@ -21,7 +21,7 @@ public class RespawnListener implements Listener{
 		final Player p = e.getPlayer();
 		if(olyWar.gameIsActive){
 			int lives = olyWar.getLives(p);
-			if(olyWar.mapType != "TDM") lives = 1;
+			if(olyWar.mapType != "Team Deathmatch") lives = 1;
 			if(lives > 0){
 
 				final Team t = olyWar.getTeam(p);

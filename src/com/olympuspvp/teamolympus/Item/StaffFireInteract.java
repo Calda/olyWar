@@ -28,9 +28,9 @@ public class StaffFireInteract{
 		origincoords[1] = player_loc.getY();
 		origincoords[2] = player_loc.getZ();
 
-		targetcoords[0] = tb.getX() + ((.5 * tb.getX()) / Math.abs(tb.getX())); // I hate you sometimes, Notch. Really? Every quadrant is different?
-		targetcoords[1] = (tb.getY() + .5) - 2;
-		targetcoords[2] = tb.getZ() + ((.5 * tb.getZ()) / Math.abs(tb.getZ()));
+		targetcoords[0] = tb.getX() + .5 * tb.getX() / Math.abs(tb.getX()); // I hate you sometimes, Notch. Really? Every quadrant is different?
+		targetcoords[1] = tb.getY() + .5 - 2;
+		targetcoords[2] = tb.getZ() + .5 * tb.getZ() / Math.abs(tb.getZ());
 
 		dofireball(p);
 	}
@@ -42,7 +42,7 @@ public class StaffFireInteract{
 			slopevector[i] = targetcoords[i] - origincoords[i];
 		}
 
-		linelength = Math.pow((Math.pow(slopevector[0], 2) + Math.pow(slopevector[1], 2) + Math.pow(slopevector[2], 2)), .5);
+		linelength = Math.pow(Math.pow(slopevector[0], 2) + Math.pow(slopevector[1], 2) + Math.pow(slopevector[2], 2), .5);
 
 		for(int i = 0; i < 3; i++){
 			slopevector[i] = slopevector[i] / linelength;

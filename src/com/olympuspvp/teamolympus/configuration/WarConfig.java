@@ -2,7 +2,6 @@ package com.olympuspvp.teamolympus.configuration;
 
 import java.io.File;
 import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -40,7 +39,7 @@ public class WarConfig{
 		final float yaw = config.getInt("spawn.yaw");
 		World w = null;
 		final List<World> ws = Bukkit.getWorlds();
-		for(World world : ws){
+		for(final World world : ws){
 			if(world.getName() == World) w = world;
 		} if(w == null) w = ws.get(0);
 		final Location loc = new Location(w, x, y, z, pitch, yaw);
@@ -56,7 +55,7 @@ public class WarConfig{
 		final float yaw = config.getInt("maps.map" + mapNumber + ".red.yaw");
 		World w = null;
 		final List<World> ws = Bukkit.getWorlds();
-		for(World world : ws){
+		for(final World world : ws){
 			if(world.getName() == World) w = world;
 		} if(w == null) w = ws.get(0);
 		final Location loc = new Location(w, x, y, z, pitch, yaw);
@@ -72,7 +71,7 @@ public class WarConfig{
 		final float yaw = config.getInt("maps.map" + mapNumber + ".blue.yaw");
 		World w = null;
 		final List<World> ws = Bukkit.getWorlds();
-		for(World world : ws){
+		for(final World world : ws){
 			if(world.getName() == World) w = world;
 		} if(w == null) w = ws.get(0);
 		final Location loc = new Location(w, x, y, z, pitch, yaw);
@@ -91,21 +90,21 @@ public class WarConfig{
 		final World world = Bukkit.getWorld(config.getString("maps.map" + mapNumber + ".Chunk1.world"));
 		final int x = config.getInt("maps.map" + mapNumber + ".Chunk1.x");
 		final int y = config.getInt("maps.map" + mapNumber + ".Chunk1.y");
-		CraftWorld cw = (CraftWorld) world;
-		net.minecraft.server.Chunk chnk = new net.minecraft.server.Chunk(cw.getHandle(), x, y);
-		CraftChunk cchunk = new CraftChunk((net.minecraft.server.Chunk) chnk);
-		Chunk chunk = cchunk;
+		final CraftWorld cw = (CraftWorld) world;
+		final net.minecraft.server.Chunk chnk = new net.minecraft.server.Chunk(cw.getHandle(), x, y);
+		final CraftChunk cchunk = new CraftChunk(chnk);
+		final Chunk chunk = cchunk;
 		return chunk;
 	}
 
 	public static Chunk getChunk2(final int mapNumber){
-		final World world = Bukkit.getWorld(config.getString("maps.map" + mapNumber + ".Chunk1.world"));
-		final int x = config.getInt("maps.map" + mapNumber + ".Chunk1.x");
-		final int y = config.getInt("maps.map" + mapNumber + ".Chunk1.y");
-		CraftWorld cw = (CraftWorld) world;
-		net.minecraft.server.Chunk chnk = new net.minecraft.server.Chunk(cw.getHandle(), x, y);
-		CraftChunk cchunk = new CraftChunk((net.minecraft.server.Chunk) chnk);
-		Chunk chunk = cchunk;
+		final World world = Bukkit.getWorld(config.getString("maps.map" + mapNumber + ".Chunk2.world"));
+		final int x = config.getInt("maps.map" + mapNumber + ".Chunk2.x");
+		final int y = config.getInt("maps.map" + mapNumber + ".Chunk2.y");
+		final CraftWorld cw = (CraftWorld) world;
+		final net.minecraft.server.Chunk chnk = new net.minecraft.server.Chunk(cw.getHandle(), x, y);
+		final CraftChunk cchunk = new CraftChunk(chnk);
+		final Chunk chunk = cchunk;
 		return chunk;
 	}
 
@@ -188,30 +187,30 @@ public class WarConfig{
 		}
 	}
 
-	public static boolean getTagStatus(Player p, Tag t){
-		List<String> unlocked = getTagList(p);
+	public static boolean getTagStatus(final Player p, final Tag t){
+		final List<String> unlocked = getTagList(p);
 		if(unlocked != null){
 			if(unlocked.contains(t.toString())) return true;
 			else return false;
 		}else return false;
 	}
 
-	public static void addUnlockedTag(Player p, Tag t){
-		String add = t.toString();
-		List<String> unlocked = getTagList(p);
+	public static void addUnlockedTag(final Player p, final Tag t){
+		final String add = t.toString();
+		final List<String> unlocked = getTagList(p);
 		unlocked.add(add);
 		olyWar.loadData(p).set("Unlocks.tags.list", unlocked);
 	}
 
-	public static List<String> getTagList(Player p){
+	public static List<String> getTagList(final Player p){
 		return olyWar.loadData(p).getStringList("Unlocks.tags.list");
 	}
-	
-	public static void setTagPreference(Player p, Tag t){
+
+	public static void setTagPreference(final Player p, final Tag t){
 		olyWar.loadData(p).set("Unlocks.tags.pref", t.toString());
 	}
-	
-	public static String getTagPreference(Player p){
+
+	public static String getTagPreference(final Player p){
 		String pref = Tag.valueOf(olyWar.loadData(p).getString("Unlocks.tags.pref")).toTag();
 		if(pref == null) pref = Tag.NOOB.toTag();
 		return pref;

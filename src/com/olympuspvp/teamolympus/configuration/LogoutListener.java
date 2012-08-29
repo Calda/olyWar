@@ -7,10 +7,10 @@ import com.olympuspvp.teamolympus.olyWar;
 
 public class LogoutListener implements Listener{
 	olyWar ow;
-	public LogoutListener(olyWar olyw){
+	public LogoutListener(final olyWar olyw){
 		this.ow = olyw;
 	}
-	
+
 	@EventHandler
 	public void onPlayerLogin(final PlayerQuitEvent e){
 		e.setQuitMessage(null);

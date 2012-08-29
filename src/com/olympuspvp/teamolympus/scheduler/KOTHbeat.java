@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -12,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.game.Runtime;
 import com.olympuspvp.teamolympus.game.Team;
-import org.bukkit.block.*;
 
 public class KOTHbeat {
 
@@ -42,7 +42,7 @@ public class KOTHbeat {
 					for(final Entity e : olyWar.point1.getEntities()){
 						if(e instanceof Player){
 							final Player p = (Player) e;
-							Material m = p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType();
+							final Material m = p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType();
 							if(m == Material.WOOL || m == Material.NETHERRACK || m == Material.LAPIS_BLOCK){
 								final Team t = olyWar.getTeam(p);
 								if(t == Team.RED) red++;
@@ -57,20 +57,20 @@ public class KOTHbeat {
 						else if(percentageRed == -64) setOwner(Team.BLUE);
 					}
 					for(final Player p : Bukkit.getOnlinePlayers()){
-							final Inventory i = p.getInventory();
-							if(percentageRed == 0 && owningTeam == Team.NONE) i.setItem(8, new ItemStack(Material.WOOL));
+						final Inventory i = p.getInventory();
+						if(percentageRed == 0 && owningTeam == Team.NONE) i.setItem(8, new ItemStack(Material.WOOL));
+						else{
+							int percent = percentageRed;
+							if(percent == 0){
+								if(owningTeam == Team.RED) percent = -1;
+								else percent = 1;
+							}if(owningTeam == Team.RED) i.setItem(8, new ItemStack(Material.LAPIS_BLOCK, -percent));
+							else if(owningTeam == Team.BLUE) i.setItem(8, new ItemStack(Material.NETHERRACK, percent));
 							else{
-								int percent = percentageRed;
-								if(percent == 0){
-									if(owningTeam == Team.RED) percent = -1;
-									else percent = 1;
-								}if(owningTeam == Team.RED) i.setItem(8, new ItemStack(Material.LAPIS_BLOCK, -percent));
-								else if(owningTeam == Team.BLUE) i.setItem(8, new ItemStack(Material.NETHERRACK, percent));
-								else{
-									if(percentageRed > 0) i.setItem(8, new ItemStack(Material.NETHERRACK, percentageRed));
-									else i.setItem(8, new ItemStack(Material.LAPIS_BLOCK, -percentageRed));
-								}
-							}//p.updateInventory();
+								if(percentageRed > 0) i.setItem(8, new ItemStack(Material.NETHERRACK, percentageRed));
+								else i.setItem(8, new ItemStack(Material.LAPIS_BLOCK, -percentageRed));
+							}
+						}//p.updateInventory();
 					}
 				}
 			}
@@ -116,15 +116,19 @@ public class KOTHbeat {
 		redTime = 64;
 		blueTime = 64;
 		setOwner(Team.NONE);
-		Runtime.startGame(ow);	
+		Runtime.startGame(ow);
 	}
 
 	private static void setOwner(final Team t){
-		if(t == Team.RED) Bukkit.getServer().broadcastMessage(olyWar.map + ChatColor.RED + "Team Red " + ChatColor.GOLD + 
-				"took the point and has " + ChatColor.YELLOW + redTime*3 + " seconds " + ChatColor.GOLD + "remaining.");
-		if(t == Team.BLUE) Bukkit.getServer().broadcastMessage(olyWar.map + ChatColor.BLUE + "Team Blue " + ChatColor.GOLD + 
-				"took the point and has " + ChatColor.YELLOW + blueTime*3 + " seconds " + ChatColor.GOLD + "remaining.");
-		owningTeam = t;
+		if(t == Team.RED){
+			final String time = ChatColor.YELLOW + "" + redTime*3/60 + "m " + redTime*3%60 + "s ";
+			Bukkit.getServer().broadcastMessage(olyWar.map + ChatColor.RED + "Team Red " + ChatColor.GOLD +
+					"took the point and has " + time + ChatColor.GOLD + "remaining.");
+		}if(t == Team.BLUE){
+			final String time = ChatColor.YELLOW + "" + blueTime*3/60 + "m " + blueTime*3%60 + "s ";
+			Bukkit.getServer().broadcastMessage(olyWar.map + ChatColor.BLUE + "Team Blue " + ChatColor.GOLD +
+					"took the point and has " + time + ChatColor.GOLD + "remaining.");
+		}owningTeam = t;
 		percentageRed = 0;
 		for(int x = 0; x <= 16; x++){
 			for(int y = 0; y <= 128; y++){
@@ -132,9 +136,11 @@ public class KOTHbeat {
 					final Block b = olyWar.point1.getBlock(x,y,z);
 					final Material m = b.getType();
 					if(m == Material.WOOL || m == Material.NETHERRACK || m == Material.LAPIS_BLOCK){
-						if(t == Team.RED) b.setType(Material.NETHERRACK);
-						if(t == Team.BLUE) b.setType(Material.LAPIS_BLOCK);
-						if(t == Team.NONE) b.setType(Material.WOOL);
+						if(b.getRelative(BlockFace.UP).getType() != Material.IRON_FENCE && b.getRelative(BlockFace.DOWN).getType() != Material.IRON_FENCE){
+							if(t == Team.RED) b.setType(Material.NETHERRACK);
+							if(t == Team.BLUE) b.setType(Material.LAPIS_BLOCK);
+							if(t == Team.NONE) b.setType(Material.WOOL);
+						}
 					}
 				}
 			}

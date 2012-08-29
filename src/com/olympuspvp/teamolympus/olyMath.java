@@ -28,7 +28,7 @@ public class olyMath{
 
 		final int[] startPos = new int[] { (int) startpoint.getX(), (int) startpoint.getZ() };
 
-		final int[] endA = new int[] { (int) (radius * Math.cos(direction - (degrees / 2))), (int) (radius * Math.sin(direction - (degrees / 2))) };
+		final int[] endA = new int[] { (int) (radius * Math.cos(direction - degrees / 2)), (int) (radius * Math.sin(direction - degrees / 2)) };
 
 		for(final Entity e : entities)
 		{
@@ -36,7 +36,7 @@ public class olyMath{
 			final int[] entityVector = getVectorForPoints(startPos[0], startPos[1], l.getBlockX(), l.getBlockY());
 
 			final double angle = getAngleBetweenVectors(endA, entityVector);
-			if((Math.toDegrees(angle) < degrees) && (Math.toDegrees(angle) > 0))
+			if(Math.toDegrees(angle) < degrees && Math.toDegrees(angle) > 0)
 				newEntities.add(e);
 		}
 		return newEntities;

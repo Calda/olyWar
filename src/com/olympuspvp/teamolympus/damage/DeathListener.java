@@ -1,7 +1,6 @@
 package com.olympuspvp.teamolympus.damage;
 
 import java.util.Random;
-import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.AnimalTamer;
@@ -14,15 +13,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.Inventory;
-
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.configuration.WarConfig;
 
 
 public class DeathListener implements Listener{
 	olyWar olyw;
-	public DeathListener(olyWar ow){
+	public DeathListener(final olyWar ow){
 		this.olyw = ow;
 	}
 	@EventHandler
@@ -34,7 +31,7 @@ public class DeathListener implements Listener{
 		final String kill = ChatColor.WHITE + "[" + ChatColor.AQUA + "KILL" + ChatColor.WHITE + "] ";
 		final String streak = ChatColor.GRAY + "[" + ChatColor.BLUE + "STREAK" + ChatColor.GRAY + "] ";
 		e.getDrops().clear();
-		olyWar.die(e.getEntity(), olyw);
+		olyWar.die(e.getEntity(), this.olyw);
 		e.setDroppedExp(0);
 		int numberOfKills = 0;
 		final Entity killer = e.getEntity().getKiller();
@@ -49,42 +46,39 @@ public class DeathListener implements Listener{
 				numberOfKills = olyWar.getScore(killerp);
 				final ChatColor cc2 = olyWar.getTeam(killerp).getColor();
 				final String name2 = olyWar.getName(killerp);
-				killerp.awardAchievement(Achievement.KILL_ENEMY);
-
 				final Random r = new Random();
 				String reason = "killed";
 				switch(r.nextInt(10)){
-
-				case 0:
-					reason = " destroyed ";
-					break;
-				case 1:
-					reason = " obliterated ";
-					break;
-				case 2:
-					reason = " murdered ";
-					break;
-				case 3:
-					reason = " knocked out ";
-					break;
-				case 4:
-					reason = " killed ";
-					break;
-				case 5:
-					reason = " killed ";
-					break;
-				case 6:
-					reason = " killed ";
-					break;
-				case 7:
-					reason = " defeated ";
-					break;
-				case 8:
-					reason = " annihilated ";
-					break;
-				case 9:
-					reason = " murdered ";
-					break;
+					case 0:
+						reason = " destroyed ";
+						break;
+					case 1:
+						reason = " obliterated ";
+						break;
+					case 2:
+						reason = " murdered ";
+						break;
+					case 3:
+						reason = " knocked out ";
+						break;
+					case 4:
+						reason = " killed ";
+						break;
+					case 5:
+						reason = " killed ";
+						break;
+					case 6:
+						reason = " killed ";
+						break;
+					case 7:
+						reason = " defeated ";
+						break;
+					case 8:
+						reason = " annihilated ";
+						break;
+					case 9:
+						reason = " murdered ";
+						break;
 				}e.setDeathMessage(kill + cc2 + name2 + ChatColor.YELLOW + reason + cc1 + name1);
 
 			}else if(killer instanceof Projectile){
@@ -118,11 +112,11 @@ public class DeathListener implements Listener{
 			if (message != null) Bukkit.getServer().broadcastMessage(streak + ChatColor.DARK_GRAY + message);
 
 			int pointsBefore = 0;
-			try{pointsBefore = olyWar.getScore(killed);}catch(Exception e1){}
+			try{pointsBefore = olyWar.getScore(killed);}catch(final Exception e1){}
 
 			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You got " + cc1 + pointsBefore + ChatColor.GOLD + " points during this life as a " + cc1 + olyWar.getClass(killed).getName());
 			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You now have " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points and " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points total");
-			olyWar.die(killed, olyw);
+			olyWar.die(killed, this.olyw);
 		}
 	}
 }

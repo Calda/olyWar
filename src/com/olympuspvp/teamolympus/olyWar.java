@@ -1,7 +1,7 @@
 package com.olympuspvp.teamolympus;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -28,6 +28,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.olympuspvp.teamolympus.Item.InteractionListener;
 import com.olympuspvp.teamolympus.Item.ItemType;
 import com.olympuspvp.teamolympus.Item.PortalInteract;
+import com.olympuspvp.teamolympus.command.ChooseMap;
 import com.olympuspvp.teamolympus.command.Manager;
 import com.olympuspvp.teamolympus.configuration.LoginListener;
 import com.olympuspvp.teamolympus.configuration.LogoutListener;
@@ -36,6 +37,7 @@ import com.olympuspvp.teamolympus.damage.DamageListener;
 import com.olympuspvp.teamolympus.damage.DeathListener;
 import com.olympuspvp.teamolympus.damage.EntityHealthRegain;
 import com.olympuspvp.teamolympus.damage.RespawnListener;
+import com.olympuspvp.teamolympus.game.MotionListener;
 import com.olympuspvp.teamolympus.game.Runtime;
 import com.olympuspvp.teamolympus.game.Team;
 import com.olympuspvp.teamolympus.game.TeamPref;
@@ -49,7 +51,6 @@ public class olyWar extends JavaPlugin{
 	public static Location spawn;
 	public static Location redSpawn;
 	public static Location blueSpawn;
-	private static String[] array = {};
 	public static boolean gameIsActive = false;
 	public static int playersAlive = 0;
 	public static int redPlayersAlive = 0;
@@ -59,6 +60,10 @@ public class olyWar extends JavaPlugin{
 	public static Chunk point1;
 	public static Chunk point2;
 	final public static String map = ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "MAP" + ChatColor.DARK_GRAY + "] " + ChatColor.GOLD;
+	final public static ChatColor[] colors = {
+		ChatColor.AQUA, ChatColor.BLUE, ChatColor.DARK_AQUA, ChatColor.DARK_BLUE, ChatColor.DARK_GRAY, ChatColor.DARK_GREEN, ChatColor.DARK_PURPLE,
+		ChatColor.DARK_RED, ChatColor.GOLD, ChatColor.GRAY, ChatColor.GREEN, ChatColor.LIGHT_PURPLE, ChatColor.RED, ChatColor.YELLOW
+	};
 
 	public static HashMap<String, Team> teams = new HashMap<String, Team>();
 	public static HashMap<String, Integer> lives = new HashMap<String, Integer>();
@@ -67,8 +72,8 @@ public class olyWar extends JavaPlugin{
 	private static HashMap<String, Integer> kills = new HashMap<String, Integer>();
 	private static HashMap<String, Integer> score = new HashMap<String, Integer>();
 
-	public static List<String> invisible = Arrays.asList(array);
-	public static List<String> hasLeftGame = Arrays.asList(array);
+	public static List<String> invisible = new ArrayList<String>();
+	public static List<String> hasLeftGame = new ArrayList<String>();
 	public static int currentMapNumber = 0;
 	public static Location currentRedSpawn = null;
 	public static Location currentBlueSpawn = null;
@@ -95,12 +100,37 @@ public class olyWar extends JavaPlugin{
 		Bukkit.getServer().getPluginManager().registerEvents(PI, this);
 		final EntityHealthRegain EHR = new EntityHealthRegain();
 		Bukkit.getServer().getPluginManager().registerEvents(EHR, this);
+		final MotionListener ML = new MotionListener();
+		Bukkit.getServer().getPluginManager().registerEvents(ML, this);
 
 		Heartbeat.start(this);
 		KOTHbeat.start(this);
 		ADbeat.start(this);
+		ChooseMap.loadMapNames();
+	}@Override
+	public void onDisable(){
+		PortalInteract.deleteAllPortals();
+		teams.clear();
+		lives.clear();
+		preference.clear();
+		players.clear();
+		kills.clear();
+		score.clear();
+		invisible.clear();
+		currentMapNumber = 0;
+		currentRedSpawn = null;
+		currentBlueSpawn = null;
+		for(Player p : Bukkit.getOnlinePlayers()){
+			olyWar.setPlayerName(((CraftPlayer)p).getHandle(), olyWar.getName(p));
+			p.teleport(olyWar.spawn);
+			p.getInventory().clear();
+			p.getInventory().setArmorContents(null);
+			for(final PotionEffect pe : p.getActivePotionEffects()){
+				p.removePotionEffect(pe.getType());
+			}
+		}
 	}
-	
+
 	@Override
 	public boolean onCommand(final CommandSender s, final Command cc, final String cl, final String[] args){
 		Manager.run(s, cl, args, this);
@@ -330,10 +360,18 @@ public class olyWar extends JavaPlugin{
 	}
 
 	public static void setPlayerName(final EntityPlayer player, final String newname){
-		/*final WorldServer world = (WorldServer) player.world;
+		final WorldServer world = (WorldServer) player.world;
 		final EntityTracker tracker = world.tracker;
 		tracker.untrackEntity(player);
 		player.name = newname;
-		tracker.track(player);*/
+		tracker.track(player);
+	}
+
+	public static String toRainbow(final String string){
+		final StringBuilder sb = new StringBuilder();
+		for(final char c : string.toCharArray()){
+			final int r = new Random().nextInt(olyWar.colors.length);
+			sb.append(olyWar.colors[r] + Character.toString(c));
+		}return sb.toString();
 	}
 }

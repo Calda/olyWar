@@ -2,13 +2,12 @@ package com.olympuspvp.teamolympus.command;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.type.ClassType;
 
 public class ChooseClass {
 
-	public static void run(Player p, String[] args){
+	public static void run(final Player p, final String[] args){
 
 		if(args.length != 1){
 			p.sendMessage(ChatColor.GRAY + "Incorrect Command Usage. /class [classType]");
@@ -16,7 +15,7 @@ public class ChooseClass {
 		}else{
 			String type = null;
 			if(args[0].equalsIgnoreCase("archer")){
-				olyWar.setClass(p, ClassType.ARCHER); 
+				olyWar.setClass(p, ClassType.ARCHER);
 				type = "Archer";
 			}else if(args[0].equalsIgnoreCase("assassin")){
 				olyWar.setClass(p, ClassType.ASSASSIN);
@@ -31,32 +30,32 @@ public class ChooseClass {
 				olyWar.setClass(p, ClassType.HUNTSMAN);
 				type = "Huntsman";
 			}else if(args[0].equalsIgnoreCase("ranger")){
-				olyWar.setClass(p, ClassType.RANGER); 
+				olyWar.setClass(p, ClassType.RANGER);
 				type = "Ranger";
 			}else if(args[0].equalsIgnoreCase("mage")){
-				olyWar.setClass(p, ClassType.MAGE); 
+				olyWar.setClass(p, ClassType.MAGE);
 				type = "Mage";
 			}else if(args[0].equalsIgnoreCase("sorcerer")){
-				olyWar.setClass(p, ClassType.SORCERER); 
+				olyWar.setClass(p, ClassType.SORCERER);
 				type = "Sorcerer";
 			}else if(args[0].equalsIgnoreCase("infiltrator")){
-				olyWar.setClass(p, ClassType.INFILTRATOR); 
+				olyWar.setClass(p, ClassType.INFILTRATOR);
 				type = "Infiltrator";
 			}else if(args[0].equalsIgnoreCase("warrior")){
-				olyWar.setClass(p, ClassType.WARRIOR); 
+				olyWar.setClass(p, ClassType.WARRIOR);
 				type = "Warrior";
 			}else if(args[0].equalsIgnoreCase("paladin")){
-				olyWar.setClass(p, ClassType.PALADIN); 
+				olyWar.setClass(p, ClassType.PALADIN);
 				type = "Paladin";
 			}else if(args[0].equalsIgnoreCase("rouge")){
-				olyWar.setClass(p, ClassType.ROUGE); 
+				olyWar.setClass(p, ClassType.ROUGE);
 				type = "Rouge";
 			}
 
 			if(type != null){
 				p.sendMessage(olyWar.getLogo() + "Your selected class is now " + ChatColor.YELLOW + type);
-				if(olyWar.getTeam(p) != null){
-					p.sendMessage(olyWar.getLogo() + "Your class will be changed next time you spawn.");
+				if(olyWar.getTeam(p) != null && olyWar.gameIsActive){
+					p.damage(20, null);
 				}
 			}else{
 				p.sendMessage(ChatColor.GRAY + "Incorrect Command Usage. /class [classType]");

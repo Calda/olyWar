@@ -30,9 +30,9 @@ public class PoisonPowderInteract {
 		origincoords[1] = player_loc.getY();
 		origincoords[2] = player_loc.getZ();
 
-		targetcoords[0] = tb.getX() + ((.5 * tb.getX()) / Math.abs(tb.getX())); //I hate you sometimes, Notch. Really? Every quadrant is different?
-		targetcoords[1] = (tb.getY() + .5);
-		targetcoords[2] = tb.getZ() + ((.5 * tb.getZ()) / Math.abs(tb.getZ()));
+		targetcoords[0] = tb.getX() + .5 * tb.getX() / Math.abs(tb.getX()); //I hate you sometimes, Notch. Really? Every quadrant is different?
+		targetcoords[1] = tb.getY() + .5;
+		targetcoords[2] = tb.getZ() + .5 * tb.getZ() / Math.abs(tb.getZ());
 
 		//didn't work. I guess I don't understand where the origin of the fireball is determined in this code. shrug. -Gav
 		// origincoords[0] = origincoords[0] + (int)(targetcoords[0] - origincoords[0])*0.1; //attempting to make fireballs not blow up in your face anymore. -Gav
@@ -50,7 +50,7 @@ public class PoisonPowderInteract {
 			slopevector[i] = targetcoords[i] - origincoords[i];
 		}
 		//Calculate line length
-		linelength = Math.pow((Math.pow(slopevector[0], 2) + Math.pow(slopevector[1], 2) + Math.pow(slopevector[2], 2)), .5);
+		linelength = Math.pow(Math.pow(slopevector[0], 2) + Math.pow(slopevector[1], 2) + Math.pow(slopevector[2], 2), .5);
 
 		//Unitize slope vector
 		for (int i = 0; i < 3; i++) {

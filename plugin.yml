@@ -17,3 +17,9 @@ commands:
         description: gives a player's streak
     classes:
         description: gives a player's streak
+    swag:
+        description: swag swag
+    map:
+        destruction: swag swag
+    maps:
+        description: swag swag

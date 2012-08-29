@@ -3,7 +3,6 @@ package com.olympuspvp.teamolympus.Item;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.game.Team;
 
@@ -15,8 +14,8 @@ public class WarAxeInteract{
 				if(ent instanceof Player){
 					final Player p = (Player) ent;
 					if(!p.equals(damager)){
-						Team t1 = olyWar.getTeam(damager);
-						Team t2 = olyWar.getTeam(p);
+						final Team t1 = olyWar.getTeam(damager);
+						final Team t2 = olyWar.getTeam(p);
 						if(t1 != t2) p.damage(2);
 					}
 				}else ((LivingEntity) ent).damage(3);

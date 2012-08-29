@@ -15,7 +15,7 @@ public class AutoBalance{
 	static Server s = Bukkit.getServer();
 	static Random r = new Random();
 
-	public static void run(boolean announce){
+	public static void run(final boolean announce){
 		if(Bukkit.getOnlinePlayers().length != 1){
 			if(olyWar.gameIsActive){
 				final List<String> redNames = new ArrayList<String>();

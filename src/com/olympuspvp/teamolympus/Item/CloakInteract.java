@@ -1,8 +1,5 @@
 package com.olympuspvp.teamolympus.Item;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -23,40 +20,19 @@ public class CloakInteract{
 		final Team t1 = olyWar.getTeam(p);
 		final Team t2 = t1.getOpposite();
 
-		final String name = olyWar.getName(p);
-		olyWar.invisible.add(name);
-		if(p.isOnline()) p.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You are now cloaked.");
+		olyWar.invisible.add(olyWar.getName(p));
+		p.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You are now cloaked.");
 
-		final Iterator<Entry<String, Team>> i = olyWar.teams.entrySet().iterator();
-
-		while(i.hasNext()){
-			final Map.Entry<String, Team> me = i.next();
-			if(me.getValue() == t2){
-				final String nme = me.getKey();
-				final Player plr = Bukkit.getPlayer(nme);
-				if(plr != null) plr.hidePlayer(p);
-			}
+		for(final Player plr : Bukkit.getServer().getOnlinePlayers()){
+			if(olyWar.getTeam(plr) == t2) plr.hidePlayer(p);
 		}
 	}
 
 	public static void visible(final Player p){
-
-		final Team t1 = olyWar.getTeam(p);
-		final Team t2 = t1.getOpposite();
-
-		final String name = olyWar.getName(p);
-		olyWar.invisible.add(name);
+		olyWar.invisible.remove(p);
 		p.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You are no longer cloacked.");
-
-		final Iterator<Entry<String, Team>> i = olyWar.teams.entrySet().iterator();
-
-		while(i.hasNext()){
-			final Map.Entry<String, Team> me = i.next();
-			if(me.getValue() == t2){
-				final String nme = me.getKey();
-				final Player plr = Bukkit.getPlayer(nme);
-				if(plr != null) plr.showPlayer(p);
-			}
+		for(final Player plr : Bukkit.getServer().getOnlinePlayers()){
+			plr.showPlayer(p);
 		}
 	}
 

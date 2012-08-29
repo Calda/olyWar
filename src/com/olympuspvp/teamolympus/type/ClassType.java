@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public enum ClassType {
-	
+
 	ROUGE("Rouge", 10, "a"),
 	INFILTRATOR("Infiltrator", 8, "an"),
 	ASSASSIN("Assassin", 12, "an"),
@@ -35,13 +35,13 @@ public enum ClassType {
 	public int getMaxHealth(){
 		return this.maxHealth;
 	}
-	
+
 	public String getArticle(){
-		return article;
+		return this.article;
 	}
-	
+
 	public ItemStack[] getArmorContents(){
-		ItemStack[] is = new ItemStack[4];
+		final ItemStack[] is = new ItemStack[4];
 		if(this == ROUGE || this == INFILTRATOR || this == ASSASSIN){
 			is[0] = new ItemStack(Material.CHAINMAIL_HELMET);
 			is[1] = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
@@ -58,9 +58,9 @@ public enum ClassType {
 			is[2] = new ItemStack(Material.LEATHER_LEGGINGS);
 			is[3] = new ItemStack(Material.LEATHER_BOOTS);
 		}
-		
+
 		return is;
-	
+
 	}
 
 }

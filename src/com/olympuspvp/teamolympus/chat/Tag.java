@@ -3,7 +3,7 @@ package com.olympuspvp.teamolympus.chat;
 import org.bukkit.ChatColor;
 
 public enum Tag {
-	
+
 	NOOB(ChatColor.GRAY + "NOOB", ChatColor.DARK_GRAY),
 	NOT_NOOB(ChatColor.GRAY + "NOT A NOOB", ChatColor.DARK_GRAY),
 	L33T(ChatColor.GRAY + "L33T", ChatColor.DARK_GRAY),
@@ -26,17 +26,17 @@ public enum Tag {
 	HUNTSMAN(ChatColor.GRAY + "PALADIN", ChatColor.DARK_GRAY),
 	RANGER(ChatColor.GRAY + "PALADIN", ChatColor.DARK_GRAY),
 	ROUGE(ChatColor.GRAY + "PALADIN", ChatColor.DARK_GRAY);
-	
-	
+
+
 	String str;
 	ChatColor cc;
-	
-	Tag(String s, ChatColor cc){
+
+	Tag(final String s, final ChatColor cc){
 		this.str = s;
 	}
-	
+
 	public String toTag(){
-		return cc + "[" + str + cc + "] ";
+		return this.cc + "[" + this.str + this.cc + "] ";
 	}
-	
+
 }

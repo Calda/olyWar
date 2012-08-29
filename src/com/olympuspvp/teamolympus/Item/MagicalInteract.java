@@ -15,8 +15,8 @@ public class MagicalInteract{
 
 		if(attacker instanceof Player){
 			if(damaged instanceof Player){
-				final Team t1 = olyWar.getTeam(((Player)attacker));
-				final Team t2 = olyWar.getTeam(((Player)damaged));
+				final Team t1 = olyWar.getTeam((Player)attacker);
+				final Team t2 = olyWar.getTeam((Player)damaged);
 				if(t1 != t2){
 					addPotion(damaged);
 				}

@@ -5,17 +5,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
-
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.configuration.WarConfig;
 
 @SuppressWarnings("deprecation")
 public class ChatListener implements Listener{
-	
+
 	@EventHandler
-	public void onPlayerChat(PlayerChatEvent e){
-		
-		Player p = e.getPlayer();
+	public void onPlayerChat(final PlayerChatEvent e){
+
+		final Player p = e.getPlayer();
 		String name = olyWar.getName(p);
 		String sepColor = ChatColor.DARK_GRAY + "";
 		String chatColor = ChatColor.WHITE + "";
@@ -52,9 +51,9 @@ public class ChatListener implements Listener{
 			else tag = Tag.ADMIN.toTag();
 		}else if(p.hasPermission("original")) tag = Tag.ORIGINAL.toTag();
 		else if(p.hasPermission("donor")) tag = Tag.DONOR.toTag();
-		
-		String message = tag + name + sepColor + ": " + chatColor + e.getMessage();
+
+		final String message = tag + name + sepColor + ": " + chatColor + e.getMessage();
 		e.setFormat(message);
 	}
-	
+
 }

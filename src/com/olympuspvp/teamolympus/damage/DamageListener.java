@@ -121,39 +121,42 @@ public class DamageListener implements Listener{
 		}
 	}
 	public static boolean onSameTeam(final Entity e1, final Entity e2){
-		Team t1 = null, t2 = null;
-		Player p1 = null, p2 = null;
+		if(olyWar.gameIsActive){
+			if(olyWar.mapType.equals("Free For All")) return false;
+			Team t1 = null, t2 = null;
+			Player p1 = null, p2 = null;
 
-		if(e1 instanceof Player) p1 = (Player) e1;
-		else if(e1 instanceof Wolf) p1 = (Player) ((Wolf)e1).getOwner();
-		else if(e1 instanceof Arrow){
-			final LivingEntity le = ((Arrow)e1).getShooter();
-			if(le instanceof Player) p1 = (Player) le;
-		}else if(e1 instanceof Snowball){
-			final LivingEntity le = ((Snowball)e1).getShooter();
-			if(le instanceof Player) p1 = (Player) le;
-		}else if(e1 instanceof SmallFireball){
-			final LivingEntity le = ((SmallFireball)e1).getShooter();
-			if(le instanceof Player) p1 = (Player) le;
-		}
+			if(e1 instanceof Player) p1 = (Player) e1;
+			else if(e1 instanceof Wolf) p1 = (Player) ((Wolf)e1).getOwner();
+			else if(e1 instanceof Arrow){
+				final LivingEntity le = ((Arrow)e1).getShooter();
+				if(le instanceof Player) p1 = (Player) le;
+			}else if(e1 instanceof Snowball){
+				final LivingEntity le = ((Snowball)e1).getShooter();
+				if(le instanceof Player) p1 = (Player) le;
+			}else if(e1 instanceof SmallFireball){
+				final LivingEntity le = ((SmallFireball)e1).getShooter();
+				if(le instanceof Player) p1 = (Player) le;
+			}
 
-		if(e2 instanceof Player) p2 = (Player) e2;
-		else if(e2 instanceof Wolf) p2 = (Player) ((Wolf)e2).getOwner();
-		else if(e2 instanceof Arrow){
-			final LivingEntity le = ((Arrow)e2).getShooter();
-			if(le instanceof Player) p2 = (Player) le;
-		}else if(e2 instanceof Snowball){
-			final LivingEntity le = ((Snowball)e2).getShooter();
-			if(le instanceof Player) p2 = (Player) le;
-		}else if(e2 instanceof SmallFireball){
-			final LivingEntity le = ((SmallFireball)e2).getShooter();
-			if(le instanceof Player) p2 = (Player) le;
-		}
+			if(e2 instanceof Player) p2 = (Player) e2;
+			else if(e2 instanceof Wolf) p2 = (Player) ((Wolf)e2).getOwner();
+			else if(e2 instanceof Arrow){
+				final LivingEntity le = ((Arrow)e2).getShooter();
+				if(le instanceof Player) p2 = (Player) le;
+			}else if(e2 instanceof Snowball){
+				final LivingEntity le = ((Snowball)e2).getShooter();
+				if(le instanceof Player) p2 = (Player) le;
+			}else if(e2 instanceof SmallFireball){
+				final LivingEntity le = ((SmallFireball)e2).getShooter();
+				if(le instanceof Player) p2 = (Player) le;
+			}
 
-		if(p1 != null && p2 != null){
-			t1 = olyWar.getTeam(p1);
-			t2 = olyWar.getTeam(p2);
-			if(t1 == Team.RED && t2 == Team.RED || t2 == Team.BLUE && t1 == Team.BLUE) return true;
+			if(p1 != null && p2 != null){
+				t1 = olyWar.getTeam(p1);
+				t2 = olyWar.getTeam(p2);
+				if(t1 == Team.RED && t2 == Team.RED || t2 == Team.BLUE && t1 == Team.BLUE) return true;
+			}
 		}
 
 		return false;

@@ -14,6 +14,9 @@ import com.olympuspvp.teamolympus.configuration.WarConfig;
 public class Runtime{
 	final static Server s = Bukkit.getServer();
 	public final static String map = ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "MAP" + ChatColor.DARK_GRAY + "] " + ChatColor.GOLD;
+	public static boolean adminChosen = false;
+	public static int adminChosenMap = -1;
+
 
 	public static void startGame(final olyWar ow){
 		final Random r = new Random();
@@ -25,8 +28,13 @@ public class Runtime{
 		boolean brokenMap = false;
 		int loops = 0;
 		do{
-			chosenMap = r.nextInt(numberOfMaps);
-			chosenMap++;
+			if(!adminChosen){
+				chosenMap = r.nextInt(numberOfMaps);
+				chosenMap++;
+			}else{
+				adminChosen = false;
+				chosenMap = adminChosenMap;
+			}
 			final Location redSpawn = WarConfig.getRedSpawn(chosenMap);
 			final Location blueSpawn = WarConfig.getBlueSpawn(chosenMap);
 			mapName = WarConfig.getMapName(chosenMap);
@@ -46,11 +54,11 @@ public class Runtime{
 				olyWar.mapType = mapType;
 			}
 			if(mapType == null) mapType = "";
-			if(mapType.equals("Attack/Defend") || mapType.equalsIgnoreCase("KOTH")){
+			if(mapType.equals("Attack/Defense") || mapType.equalsIgnoreCase("KOTH")){
 				olyWar.point1 = WarConfig.getChunk1(chosenMap);
 				olyWar.point2 = WarConfig.getChunk2(chosenMap);
 				if(olyWar.point1 == null) brokenMap = true;
-				else if(olyWar.point2 == null && mapType.equals("Attack/Defend")) brokenMap = true;
+				else if(olyWar.point2 == null && mapType.equals("Attack/Defense")) brokenMap = true;
 			}
 
 			loops++;
