@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -34,31 +35,34 @@ public class PortalInteract implements Listener{
 			if(b.getType() == Material.PORTAL && up.getType() == Material.AIR){
 				if(olyWar.getTeam(p) == Team.RED) b.setType(Material.NETHERRACK);
 				else if(olyWar.getTeam(p) == Team.BLUE) b.setType(Material.LAPIS_BLOCK);
-				up.setTypeId(90,false);
+				up.setTypeId(1,false);
+				up.setTypeId(119,false);
 				if(!allPortals.containsKey(name)){
 					final Portals portals = new Portals();
 					portals.set(1, up);
 					allPortals.put(name, portals);
 					p.sendMessage(portalTag + "You have created a new portal for you team.");
-					p.sendMessage(portalTag + ChatColor.GOLD + "Build another for them to connect!");
+					p.sendMessage(portalTag + "Build another for them to connect!");
 					p.setItemInHand(new ItemStack(ItemType.PORTAL_CALLBACK.getMaterial()));
 				}else{
 					final Portals portals = allPortals.get(name);
-					if(portals.get(1) == null){
+					/*if(portals.get(1) == null){
 						portals.set(1, up);
 						allPortals.put(name, portals);
 						p.sendMessage(portalTag + "You have created a new portal for you team.");
 						p.sendMessage(portalTag + "Build another for them to connect!");
 						p.setItemInHand(new ItemStack(ItemType.PORTAL_CALLBACK.getMaterial()));
-					}else{
+					}else{*/
 						if(portals.get(2) == null){
-							portals.set(1, up);
+							portals.set(2, up);
 							allPortals.put(name, portals);
 							p.sendMessage(portalTag + "You have created another portal for you team.");
 							p.sendMessage(portalTag + "You can now teleport between the two portals!");
 							p.setItemInHand(new ItemStack(ItemType.PORTAL_CALLBACK.getMaterial()));
+						}else{
+							p.sendMessage(portalTag + "You already have two portals placed. Wat?");
 						}
-					}
+					//}
 				}
 			}else e.setCancelled(true);
 		}else if(!p.isOp()) e.setCancelled(true);
@@ -70,6 +74,7 @@ public class PortalInteract implements Listener{
 		final Block portal = p.getLocation().getBlock();
 		final Block wool = portal.getRelative(BlockFace.DOWN);
 		boolean rightTeam = false;
+		e.setCancelled(false);
 		if(wool.getType() == Material.NETHERRACK && olyWar.getTeam(p) == Team.RED) rightTeam = true;
 		else if(wool.getType() == Material.LAPIS_BLOCK && olyWar.getTeam(p) == Team.BLUE) rightTeam = true;
 		if(rightTeam){
@@ -81,7 +86,10 @@ public class PortalInteract implements Listener{
 					if(portal == portals.get(1)) otherPortal = portals.get(2);
 					else if(portal == portals.get(2)) otherPortal = portals.get(1);
 					else p.sendMessage(portalTag + ChatColor.DARK_RED + "That portal is not properly connected to its owner. Please report this as ERROR P-1");
-					if(otherPortal != null) e.setTo(otherPortal.getLocation());
+					if(otherPortal != null){
+						e.setTo(otherPortal.getLocation());
+						e.setCancelled(false);
+					}
 					else p.sendMessage(portalTag + ChatColor.DARK_RED + "That portal is not properly connected to its owner. Please report this as ERROR P-2");
 				}else p.sendMessage(portalTag + ChatColor.DARK_RED + "That portal is not owned by a player. Plase report this as ERROR P-3");
 			}else p.sendMessage(portalTag + ChatColor.DARK_RED + "That portal is not owned by a player. Plase report this as ERROR P-4");
@@ -141,9 +149,11 @@ public class PortalInteract implements Listener{
 
 	public static String getOwnerOfPortal(final Block b){
 		final Iterator<Entry<String, Portals>> i = allPortals.entrySet().iterator();
+		Location bl = b.getLocation();
 		while(i.hasNext()){
+			System.out.println("hasNext");
 			final Map.Entry<String, Portals> me = i.next();
-			if(me.getValue().get(1) == b || me.getValue().get(2) == b){
+			if(me.getValue().get(1).getLocation() == bl || me.getValue().get(2).getLocation() == bl){
 				System.out.println(me.getKey());
 				return me.getKey();
 			}
