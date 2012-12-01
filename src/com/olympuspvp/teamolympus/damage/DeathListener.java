@@ -5,9 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,7 +29,7 @@ public class DeathListener implements Listener{
 		final String kill = ChatColor.WHITE + "[" + ChatColor.AQUA + "KILL" + ChatColor.WHITE + "] ";
 		final String streak = ChatColor.GRAY + "[" + ChatColor.BLUE + "STREAK" + ChatColor.GRAY + "] ";
 		e.getDrops().clear();
-		olyWar.die(e.getEntity(), this.olyw);
+		olyWar.runDeath(e.getEntity(), this.olyw);
 		e.setDroppedExp(0);
 		int numberOfKills = 0;
 		final Entity killer = e.getEntity().getKiller();
@@ -81,16 +79,6 @@ public class DeathListener implements Listener{
 						break;
 				}e.setDeathMessage(kill + cc2 + name2 + ChatColor.YELLOW + reason + cc1 + name1);
 
-			}else if(killer instanceof Projectile){
-				final LivingEntity killerLE = ((Projectile)killer).getShooter();
-				if(killerLE instanceof Player){
-					final Player killerp = (Player) killerLE;
-					olyWar.addPoint(killerp);
-					numberOfKills = olyWar.getScore(killerp);
-					final ChatColor cc2 = olyWar.getTeam(killerp).getColor();
-					final String name2 = olyWar.getName(killerp);
-					e.setDeathMessage(cc2 + name2 + ChatColor.YELLOW + " shot " + cc1 + name1);
-				}
 			}else if(killer instanceof Tameable){
 				final AnimalTamer killerLE = ((Tameable)killer).getOwner();
 				if(killerLE instanceof Player){
@@ -116,7 +104,6 @@ public class DeathListener implements Listener{
 
 			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You got " + cc1 + pointsBefore + ChatColor.GOLD + " points during this life as a " + cc1 + olyWar.getClass(killed).getName());
 			killed.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You now have " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points and " + cc1 + WarConfig.getScore(killed) + ChatColor.GOLD + " points total");
-			olyWar.die(killed, this.olyw);
 		}
 	}
 }

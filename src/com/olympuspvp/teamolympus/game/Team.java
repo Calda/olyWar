@@ -3,29 +3,27 @@ package com.olympuspvp.teamolympus.game;
 import org.bukkit.ChatColor;
 
 public enum Team{
-	RED(ChatColor.RED + "Red", ChatColor.RED, (byte) 14),
-	BLUE(ChatColor.BLUE + "Blue", ChatColor.BLUE, (byte) 11),
-	NONE(ChatColor.GRAY + "Spectator", ChatColor.GRAY, (byte) 0);
+	RED(ChatColor.RED + "Red", ChatColor.RED),
+	BLUE(ChatColor.BLUE + "Blue", ChatColor.BLUE),
+	NONE(ChatColor.GRAY + "Spectator", ChatColor.GRAY);
 
 	String name;
 	ChatColor cc;
-	byte woolColor;
-	Team(final String n, final ChatColor chatc, final byte woolColor){
+	Team(final String n, final ChatColor chatc){
 		this.name = n;
 		this.cc = chatc;
-		this.woolColor = woolColor;
 	}
 
 	public String getName(){
 		return this.name;
 	}
+	
+	public String getTeamName(){
+		return getColor() + "Team " + getName();
+	}
 
 	public ChatColor getColor(){
 		return this.cc;
-	}
-
-	public byte getWoolData(){
-		return this.woolColor;
 	}
 
 	public Team getOpposite(){

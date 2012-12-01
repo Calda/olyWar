@@ -6,17 +6,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.command.Vote;
 import com.olympuspvp.teamolympus.configuration.WarConfig;
 
 public class Runtime{
 	final static Server s = Bukkit.getServer();
-	public final static String map = ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "MAP" + ChatColor.DARK_GRAY + "] " + ChatColor.GOLD;
 	public static boolean adminChosen = false;
 	public static int adminChosenMap = -1;
-
+	private static String map = olyWar.map;
 
 	public static void startGame(final olyWar ow){
 		final Random r = new Random();
@@ -34,8 +32,7 @@ public class Runtime{
 			}else{
 				adminChosen = false;
 				chosenMap = adminChosenMap;
-			}
-			final Location redSpawn = WarConfig.getRedSpawn(chosenMap);
+			}final Location redSpawn = WarConfig.getRedSpawn(chosenMap);
 			final Location blueSpawn = WarConfig.getBlueSpawn(chosenMap);
 			mapName = WarConfig.getMapName(chosenMap);
 			mapType = WarConfig.getMapType(chosenMap);
@@ -59,6 +56,8 @@ public class Runtime{
 				olyWar.point2 = WarConfig.getChunk2(chosenMap);
 				if(olyWar.point1 == null) brokenMap = true;
 				else if(olyWar.point2 == null && mapType.equals("Attack/Defense")) brokenMap = true;
+			}else if(mapType.equalsIgnoreCase("Free For All")){
+				olyWar.freeForAllSpawns = WarConfig.getSpawn(chosenMap);
 			}
 
 			loops++;
@@ -121,17 +120,7 @@ public class Runtime{
 			loser = ChatColor.BLUE + "Blue";
 			winner = ChatColor.RED + "Red";
 		}s.broadcastMessage(map + "Team " + winner + ChatColor.GOLD + " defeated Team " + loser);
-		killAll(ow);
 		olyWar.gameIsActive = false;
 		startGame(ow);
-	}
-	public static void killAll(final olyWar ow){
-		olyWar.hasLeftGame.clear();
-		for(final Player p : s.getOnlinePlayers()){
-			if(olyWar.getLives(p) != 0){
-				p.getInventory().clear();
-				p.teleport(olyWar.spawn, TeleportCause.PLUGIN);
-			}
-		}
 	}
 }

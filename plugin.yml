@@ -17,6 +17,8 @@ commands:
         description: gives a player's streak
     classes:
         description: gives a player's streak
+    leave:
+        description: leaves team
     swag:
         description: swag swag
     map:

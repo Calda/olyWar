@@ -1,18 +1,16 @@
 package com.olympuspvp.teamolympus.command;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import com.olympuspvp.teamolympus.olyWar;
-import com.olympuspvp.teamolympus.game.Runtime;
 
 public class Vote {
 	private static boolean voteInProgress = false;
 	private static int yes = 0;
 	private static int no = 0;
-	private static List<String> voted = new ArrayList<String>();
+	private static HashMap<String, Boolean> votes = new HashMap<String, Boolean>();
 
 	public static void run(final Player p, final String[] args){
 		if(voteInProgress){
@@ -20,19 +18,33 @@ public class Vote {
 				p.sendMessage(ChatColor.GRAY + "Incorrect Usage: /vote [yes/no/results]");
 			}else{
 				if(args[0].contains("y")){
-					if(!voted.contains(olyWar.getName(p))){
+					if(!votes.containsKey(olyWar.getName(p))){
 						yes++;
-						voted.add(olyWar.getName(p));
+						votes.put(olyWar.getName(p), true);
 						p.sendMessage(olyWar.map + "You have voted " + ChatColor.GREEN + "yes " + ChatColor.GOLD + "for the next map");
 						p.sendMessage(olyWar.map + "Current results are " + ChatColor.GREEN + yes + " yes" + ChatColor.GOLD + "/" + ChatColor.RED + no + " no");
-					}else p.sendMessage(ChatColor.GRAY + "You may not vote multiple times.");
+					}else{
+						if(votes.get(olyWar.getName(p))){
+							p.sendMessage(ChatColor.GRAY + "You may not vote multiple times.");
+						}else{
+							no--;
+							yes++;
+						}
+					}
 				}else if(args[0].contains("n")){
-					if(!voted.contains(olyWar.getName(p))){
+					if(!votes.containsKey(olyWar.getName(p))){
 						no++;
-						voted.add(olyWar.getName(p));
+						votes.put(olyWar.getName(p), false);
 						p.sendMessage(olyWar.map + "You have voted " + ChatColor.RED + "no " + ChatColor.GOLD + "for the next map");
 						p.sendMessage(olyWar.map + "Current results are " + ChatColor.GREEN + yes + " yes" + ChatColor.GOLD + "/" + ChatColor.RED + no + " no");
-					}else p.sendMessage(ChatColor.GRAY + "You may not vote multiple times.");
+					}else{
+						if(!votes.get(olyWar.getName(p))){
+							p.sendMessage(ChatColor.GRAY + "You may not vote multiple times.");
+						}else{
+							no++;
+							yes--;
+						}
+					}
 				}else if(args[0].equalsIgnoreCase("results")){
 					p.sendMessage(olyWar.map + "Current results are " + ChatColor.GREEN + yes + " yes" + ChatColor.GOLD + "/" + ChatColor.RED + no + " no");
 				}else p.sendMessage(ChatColor.GRAY + "Incorrect Usage: /vote [yes/no/results]");
@@ -43,7 +55,7 @@ public class Vote {
 	}
 
 	public static void openVote(){
-		voted.clear();
+		votes.clear();
 		voteInProgress = true;
 		yes = 0;
 		no = 0;
@@ -51,8 +63,8 @@ public class Vote {
 
 	public static boolean getVerdict(){
 		voteInProgress = false;
-		voted.clear();
-		Bukkit.getServer().broadcastMessage(Runtime.map + "Voting results are " + ChatColor.GREEN + yes + " Yes" + ChatColor.GOLD + "/" + ChatColor.RED + no + " No");
+		votes.clear();
+		Bukkit.getServer().broadcastMessage(olyWar.map + "Voting results are " + ChatColor.GREEN + yes + " Yes" + ChatColor.GOLD + "/" + ChatColor.RED + no + " No");
 		if(yes >= no) return true;
 		else return false;
 	}

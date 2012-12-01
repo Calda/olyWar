@@ -25,7 +25,7 @@ public class InteractionListener implements Listener{
 		final Action a = e.getAction();
 
 		if(olyWar.getClass(p) == ClassType.ASSASSIN){
-			if(CloakInteract.checkVisible(p)) CloakInteract.visible(p);
+			if(olyWar.isInvisible(p)) CloakInteract.visible(p);
 		}
 
 		if(a == Action.LEFT_CLICK_BLOCK){

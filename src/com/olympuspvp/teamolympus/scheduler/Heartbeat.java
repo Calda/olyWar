@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.Item.CloakInteract;
-import com.olympuspvp.teamolympus.game.AutoBalance;
 import com.olympuspvp.teamolympus.game.NoSprint;
 import com.olympuspvp.teamolympus.type.ClassType;
 
@@ -23,7 +22,7 @@ public class Heartbeat {
 								final int health = p.getHealth();
 								if(health != ClassType.PALADIN.getMaxHealth()) p.setHealth(health+1);
 							}if(olyWar.getClass(p) == ClassType.ASSASSIN){
-								if(olyWar.invisible.contains(olyWar.getName(p))){
+								if(olyWar.isInvisible(p)){
 									final int mana = p.getFoodLevel();
 									if(mana != 0) p.setFoodLevel(mana - 1);
 									else CloakInteract.visible(p);
@@ -40,20 +39,12 @@ public class Heartbeat {
 				}
 			}
 		}, 15L, 15L);
-
-		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(ow, new Runnable(){
-			@Override
-			public void run(){
-				AutoBalance.run(true);
-			}
-		}, 3*60*20L, 3*60*20L);
-
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(ow, new Runnable(){
 			@Override
 			public void run(){
 				NoSprint.check();
 			}
-		}, 3L,3L);
+		}, 1L,1L);
 
 	}
 

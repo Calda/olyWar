@@ -3,6 +3,7 @@ package com.olympuspvp.teamolympus.command;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import com.olympuspvp.teamolympus.olyWar;
+import com.olympuspvp.teamolympus.damage.RespawnListener;
 import com.olympuspvp.teamolympus.type.ClassType;
 
 public class ChooseClass {
@@ -55,7 +56,7 @@ public class ChooseClass {
 			if(type != null){
 				p.sendMessage(olyWar.getLogo() + "Your selected class is now " + ChatColor.YELLOW + type);
 				if(olyWar.getTeam(p) != null && olyWar.gameIsActive){
-					p.damage(20, null);
+					RespawnListener.respawnPlayer(p);
 				}
 			}else{
 				p.sendMessage(ChatColor.GRAY + "Incorrect Command Usage. /class [classType]");

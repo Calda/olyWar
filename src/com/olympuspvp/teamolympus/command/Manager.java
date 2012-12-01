@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import com.olympuspvp.teamolympus.olyWar;
+import com.olympuspvp.teamolympus.damage.RespawnListener;
 import com.olympuspvp.teamolympus.game.TeamPref;
 import com.olympuspvp.teamolympus.type.ClassType;
 
@@ -19,17 +20,17 @@ public class Manager {
 			if(cl.equalsIgnoreCase("red")){
 				olyWar.setPreference(p, TeamPref.RED);
 				p.sendMessage(olyWar.getLogo() + "You preferred team is now" + ChatColor.RED + " Team Red");
-				if(olyWar.gameIsActive && olyWar.getClass(p) != null) p.damage(20, null);
+				if(olyWar.gameIsActive && olyWar.getClass(p) != null) RespawnListener.respawnPlayer(p);
 			}
 			if(cl.equalsIgnoreCase("blue")){
 				olyWar.setPreference(p, TeamPref.BLUE);
 				p.sendMessage(olyWar.getLogo() + "You preferred team is now" + ChatColor.BLUE + " Team Blue");
-				if(olyWar.gameIsActive && olyWar.getClass(p) != null) p.damage(20, null);
+				if(olyWar.gameIsActive && olyWar.getClass(p) != null) RespawnListener.respawnPlayer(p);
 			}
 			if(cl.equalsIgnoreCase("random")){
 				olyWar.setPreference(p, TeamPref.RANDOM);
 				p.sendMessage(olyWar.getLogo() + "You team will now be randomly assigned at the start of each game");
-				if(olyWar.gameIsActive && olyWar.getClass(p) != null) p.damage(20, null);
+				if(olyWar.gameIsActive && olyWar.getClass(p) != null) RespawnListener.respawnPlayer(p);
 			}
 			if(cl.equalsIgnoreCase("swag")){
 				p.sendMessage(olyWar.toRainbow("swag swag"));
@@ -37,7 +38,7 @@ public class Manager {
 			if(cl.equalsIgnoreCase("classes")){
 				final StringBuilder sb = new StringBuilder();
 				boolean darkgray = false;
-				int amount = 0;
+				int amount = 1;
 				for(final ClassType ct : ClassType.values()){
 					darkgray = !darkgray;
 					String add = " ";

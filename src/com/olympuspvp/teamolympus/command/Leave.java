@@ -8,13 +8,11 @@ public class Leave {
 
 		final Team t = olyWar.getTeam(p);
 		if(t != null){
-			p.sendMessage(olyWar.getLogo() + "You are no longer a member of Team " + t.getColor() + t.getName());
-			p.sendMessage(olyWar.getLogo() + "You may rejoin a team at the start of the next round.");
+			p.sendMessage(olyWar.getLogo() + "You are no longer a member of " + t.getTeamName());
 			olyWar.leaveTeam(p);
-			if(t == Team.BLUE) olyWar.bluePlayersAlive--;
-			else olyWar.redPlayersAlive--;
-			while(olyWar.getLives(p) != 0){
-				olyWar.die(p, ow);
+			if(olyWar.mapType.equals("TDM")){
+				if(t == Team.BLUE) olyWar.bluePlayersAlive--;
+				else olyWar.redPlayersAlive--;
 			}p.teleport(olyWar.spawn);
 		}else{
 			p.sendMessage(olyWar.getLogo() + "You are not a member of a team.");

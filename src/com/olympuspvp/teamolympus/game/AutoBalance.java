@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import com.olympuspvp.teamolympus.olyWar;
+import com.olympuspvp.teamolympus.damage.RespawnListener;
 
 
 public class AutoBalance{
@@ -37,7 +38,7 @@ public class AutoBalance{
 					higher = Team.BLUE;
 				}else difference = 0;
 
-				if(difference != 0){
+				if(difference > 1){
 					Collections.shuffle(redNames);
 					Collections.shuffle(blueNames);
 					final int changeOver = difference/2;
@@ -46,52 +47,35 @@ public class AutoBalance{
 						moveIndex = r.nextInt(redNames.size()-difference-1);
 						for(int i = 0; i <= changeOver; i++){
 							String toMove = null;
-							try{
-								toMove = redNames.get(moveIndex);
-								final Player p = s.getPlayer(toMove);
-								if(p == null){
-									throw new NullPointerException();
-								}else{
-									olyWar.setTeam(p,Team.BLUE);
-									p.sendMessage(olyWar.getLogo() + "You are new a member of Team " + ChatColor.BLUE + "Blue");
-									p.teleport(olyWar.blueSpawn);
-									olyWar.redPlayersAlive--;
-									olyWar.bluePlayersAlive++;
-								}
-							}catch(final ArrayIndexOutOfBoundsException e){
-								e.printStackTrace();
-								System.out.println("Math Error???");
-							}catch(final NullPointerException e){
-								e.printStackTrace();
-								System.out.println("That player is no longer on the server... :(");
+							toMove = redNames.get(moveIndex);
+							final Player p = s.getPlayer(toMove);
+							if(p == null){
+								throw new NullPointerException();
+							}else{
+								olyWar.setTeam(p,Team.BLUE);
+								p.sendMessage(olyWar.getLogo() + "You are new a member of Team " + ChatColor.BLUE + "Blue");
+								p.teleport(olyWar.blueSpawn);
+								olyWar.redPlayersAlive--;
+								olyWar.bluePlayersAlive++;
 							}
 						}
 					}else if(higher == Team.BLUE){
 						moveIndex = r.nextInt(blueNames.size()-difference-1);
 						for(int i = 0; i <= changeOver; i++){
 							String toMove = null;
-							try{
-								toMove = blueNames.get(moveIndex);
-								final Player p = s.getPlayer(toMove);
-								if(p == null){
-									throw new NullPointerException();
-								}else{
-									olyWar.setTeam(p,Team.RED);
-									p.sendMessage(olyWar.getLogo() + "You are new a member of Team " + ChatColor.RED + "Red");
-									p.teleport(olyWar.redSpawn);
-									olyWar.redPlayersAlive++;
-									olyWar.bluePlayersAlive--;
-								}
-							}catch(final ArrayIndexOutOfBoundsException e){
-								e.printStackTrace();
-								System.out.println("Math Error???");
-							}catch(final NullPointerException e){
-								e.printStackTrace();
-								System.out.println("That player is no longer on the server... :(");
+							toMove = blueNames.get(moveIndex);
+							final Player p = s.getPlayer(toMove);
+							if(p == null){
+								throw new NullPointerException();
+							}else{
+								olyWar.setTeam(p,Team.RED);
+								p.sendMessage(olyWar.getLogo() + "You are new a member of Team " + ChatColor.RED + "Red");
+								RespawnListener.respawnPlayer(p);
+								olyWar.redPlayersAlive++;
+								olyWar.bluePlayersAlive--;
 							}
 						}
 					}
-					Bukkit.getServer().broadcastMessage(olyWar.getLogo() + "Teams have been autobalanced.");
 				}
 			}
 		}

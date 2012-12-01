@@ -45,6 +45,26 @@ public class WarConfig{
 		final Location loc = new Location(w, x, y, z, pitch, yaw);
 		return loc;
 	}
+	
+	public static Location[] getSpawn(final int mapNumber){
+		String mapType = getMapType(mapNumber);
+		if(mapType != null){
+			if(mapType.equals("Free For All")){
+				int numberOfSpawns = config.getInt("maps.map" + mapNumber + ".spawns.numberOfSpawns");
+				Location[] locs = new Location[numberOfSpawns];
+				for(int i = 1; i <= numberOfSpawns; i++){
+					final int x = config.getInt("maps.map" + mapNumber + ".spawns.spawn" + (i+1) + ".x");
+					final int y = config.getInt("maps.map" + mapNumber + ".spawns.spawn" + (i+1) + ".y");
+					final int z = config.getInt("maps.map" + mapNumber + ".spawns.spawn" + (i+1) + ".z");
+					final String World = config.getString("maps.map" + mapNumber + ".spawns.spawn" + (i+1) + ".world");
+					final float pitch = config.getInt("maps.map" + mapNumber + ".spawns.spawn" + (i+1) + ".pitch");
+					final float yaw = config.getInt("maps.map" + mapNumber + ".spawns.spawn" + (i+1) + ".yaw");
+					Location temp = new Location(Bukkit.getWorld(World), x, y, z, pitch, yaw);
+					locs[i] = temp;
+				}return locs;
+			}else return null;
+		}else return null;
+	}
 
 	public static Location getRedSpawn(final int mapNumber){
 		final int x = config.getInt("maps.map" + mapNumber + ".red.x");
@@ -83,7 +103,10 @@ public class WarConfig{
 	}
 
 	public static String getMapType(final int mapNumber){
-		return config.getString("maps.map" + mapNumber + ".type");
+		String name = config.getString("maps.map" + mapNumber + ".type");
+		if(name != null){
+			if(name.equals("Team Deathmatch")) return "TDM";
+		}return name;
 	}
 
 	public static Chunk getChunk1(final int mapNumber){
@@ -111,29 +134,12 @@ public class WarConfig{
 	// ***************
 	// PLAYER METHODS
 	// ***************
-	@Deprecated
-	public static void setTotalKills(final Player p, final int kills){
-		olyWar.loadData(p).set("Records.kills", kills);
-	}
-	@Deprecated
-	public static int getTotalKills(final Player p){
-		return olyWar.loadData(p).getInt("Records.kills");
-	}
-
 	public static void setScore(final Player p, final int score){
 		olyWar.loadData(p).set("Records.score", score);
 	}
 
 	public static int getScore(final Player p){
 		return olyWar.loadData(p).getInt("Records.score");
-	}
-	@Deprecated
-	public static void setClassKills(final Player p, final ClassType ct, final int kills){
-		olyWar.loadData(p).set("Records." + ct.getName() + ".kills", kills);
-	}
-	@Deprecated
-	public static int getClassKills(final Player p, final ClassType ct){
-		return olyWar.loadData(p).getInt("Records." + ct.getName() + ".kills");
 	}
 
 	public static void setClassScore(final Player p, final ClassType ct, final int score){

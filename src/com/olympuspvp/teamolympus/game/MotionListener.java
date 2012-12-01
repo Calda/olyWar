@@ -1,6 +1,5 @@
 package com.olympuspvp.teamolympus.game;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -9,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.scheduler.ADbeat;
 
@@ -23,10 +23,7 @@ public class MotionListener implements Listener{
 
 	@EventHandler
 	public void onMove(final PlayerMoveEvent e){
-		final Player player = e.getPlayer();
-		for (final Player p : Bukkit.getOnlinePlayers()){
-			p.showPlayer(player);
-		}if(olyWar.gameIsActive){
+		if(olyWar.gameIsActive){
 			final Player p = e.getPlayer();
 			final Block b = p.getLocation().getBlock().getRelative(BlockFace.DOWN);
 			if(b.getType() == Material.IRON_FENCE){
@@ -60,12 +57,16 @@ public class MotionListener implements Listener{
 						}else{
 							if(b.getRelative(BlockFace.EAST).getType() != Material.LAPIS_BLOCK){
 								tpTo = b.getRelative(BlockFace.EAST);
+								System.out.println("east");
 							}else if(b.getRelative(BlockFace.NORTH).getType() != Material.LAPIS_BLOCK){
 								tpTo = b.getRelative(BlockFace.NORTH);
+								System.out.println("north");
 							}else if(b.getRelative(BlockFace.SOUTH).getType() != Material.LAPIS_BLOCK){
 								tpTo = b.getRelative(BlockFace.SOUTH);
+								System.out.println("south");
 							}else if(b.getRelative(BlockFace.WEST).getType() != Material.LAPIS_BLOCK){
 								tpTo = b.getRelative(BlockFace.WEST);
+								System.out.println("west");
 							}this.tpToBlue = tpTo;
 							this.cachedMapNameBlue = olyWar.mapName;
 						}if(tpTo != null){
@@ -95,5 +96,9 @@ public class MotionListener implements Listener{
 				}
 			}
 		}
+	}@EventHandler
+	public void onTeleport(PlayerTeleportEvent e){
+		//olyWar.dcAPI.disguisePlayer(e.getPlayer(), new Disguise(olyWar.dcAPI.newEntityID(), e.getPlayer().getName(), null));
+		//olyWar.dcAPI.undisguisePlayer(e.getPlayer());
 	}
 }

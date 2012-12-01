@@ -2,6 +2,7 @@ package com.olympuspvp.teamolympus.damage;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -24,23 +25,7 @@ public class RespawnListener implements Listener{
 			if(olyWar.mapType != "Team Deathmatch") lives = 1;
 			if(lives > 0){
 
-				final Team t = olyWar.getTeam(p);
-				final ClassType ct = olyWar.getClass(p);
-				if(t == Team.RED){
-					//olyWar.setPlayerName(((CraftPlayer)p).getHandle(), ChatColor.RED + olyWar.getName(p));
-					e.setRespawnLocation(olyWar.redSpawn);
-					p.teleport(olyWar.redSpawn);
-					p.getInventory().setHelmet(new ItemStack(Material.NETHERRACK));
-				}if(t == Team.BLUE){
-					//olyWar.setPlayerName(((CraftPlayer)p).getHandle(), ChatColor.BLUE + olyWar.getName(p));
-					e.setRespawnLocation(olyWar.blueSpawn);
-					p.teleport(olyWar.redSpawn);
-					p.getInventory().setHelmet(new ItemStack(Material.LAPIS_BLOCK));
-				}if(t != Team.NONE){
-					p.sendMessage(olyWar.map + "You have respawned in " + ChatColor.GREEN + olyWar.mapType + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + olyWar.mapName + ChatColor.GOLD + " as " + ct.getArticle() + " " + t.getColor() + ct.getName());
-				}
-
-				olyWar.applyClass(p);
+				e.setRespawnLocation(RespawnListener.respawnPlayer(p));
 
 			}else{
 				e.setRespawnLocation(olyWar.spawn);
@@ -60,6 +45,50 @@ public class RespawnListener implements Listener{
 		for (final Player p : Bukkit.getOnlinePlayers()){
 			if (p.canSee(player)) p.showPlayer(player);
 		}
+	}
+
+	public static Location respawnPlayer(Player p){
+		Location loc = null;
+		final ClassType ct = olyWar.getClass(p);
+		if(olyWar.mapType.equals("Free For All")){
+			Location randomLoc = olyWar.getFreeForAllSpawn();
+			loc = randomLoc;
+		}else{
+			Team t = olyWar.getTeam(p);
+			int red = 0;
+			int blue = 0;
+			for(Player plr : Bukkit.getOnlinePlayers()){
+				if(olyWar.getTeam(plr) == Team.RED) red++;
+				else if(olyWar.getTeam(plr) == Team.BLUE) blue++;
+			}int difference = 0;
+			Team higher = Team.NONE;
+			if(red > blue){
+				difference = red - blue;
+				higher = Team.RED;
+			}else if(blue > red){
+				difference = blue - red;
+				higher = Team.BLUE;
+			}if(difference > 1){
+				if(t == higher){
+					t = higher.getOpposite();
+					olyWar.setTeam(p, t);
+					p.sendMessage(olyWar.map + "You have been autobalanced to " + t.getTeamName());
+				}
+			}
+
+			if(t == Team.RED){
+				olyWar.setPlayerName(((CraftPlayer)p).getHandle(), ChatColor.RED + olyWar.getName(p));
+				loc = olyWar.redSpawn;
+				p.getInventory().setHelmet(new ItemStack(Material.NETHERRACK));
+			}if(t == Team.BLUE){
+				olyWar.setPlayerName(((CraftPlayer)p).getHandle(), ChatColor.BLUE + olyWar.getName(p));
+				loc = olyWar.blueSpawn;
+				p.getInventory().setHelmet(new ItemStack(Material.LAPIS_BLOCK));
+			}if(t != Team.NONE){
+				p.sendMessage(olyWar.map + "You have respawned in " + ChatColor.GREEN + olyWar.mapType + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + olyWar.mapName + ChatColor.GOLD + " as " + ct.getArticle() + " " + t.getColor() + ct.getName());
+			}olyWar.applyClass(p);
+		}p.teleport(loc);
+		return loc;
 	}
 
 }

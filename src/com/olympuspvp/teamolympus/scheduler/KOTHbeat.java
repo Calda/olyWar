@@ -136,7 +136,7 @@ public class KOTHbeat {
 					final Block b = olyWar.point1.getBlock(x,y,z);
 					final Material m = b.getType();
 					if(m == Material.WOOL || m == Material.NETHERRACK || m == Material.LAPIS_BLOCK){
-						if(b.getRelative(BlockFace.UP).getType() != Material.IRON_FENCE && b.getRelative(BlockFace.DOWN).getType() != Material.IRON_FENCE){
+						if(b.getRelative(BlockFace.UP).getType() != Material.IRON_FENCE && b.getRelative(BlockFace.DOWN).getType() != Material.IRON_FENCE && b.getRelative(BlockFace.UP).getTypeId() != 90){
 							if(t == Team.RED) b.setType(Material.NETHERRACK);
 							if(t == Team.BLUE) b.setType(Material.LAPIS_BLOCK);
 							if(t == Team.NONE) b.setType(Material.WOOL);

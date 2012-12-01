@@ -57,10 +57,12 @@ public enum ClassType {
 			is[1] = new ItemStack(Material.LEATHER_CHESTPLATE);
 			is[2] = new ItemStack(Material.LEATHER_LEGGINGS);
 			is[3] = new ItemStack(Material.LEATHER_BOOTS);
-		}
-
-		return is;
-
+		}else if(this == MAGE || this == CLERIC || this == SORCERER){
+			is[0] = new ItemStack(Material.GOLD_HELMET);
+			is[1] = new ItemStack(Material.GOLD_CHESTPLATE);
+			is[2] = new ItemStack(Material.GOLD_LEGGINGS);
+			is[3] = new ItemStack(Material.GOLD_BOOTS);
+		}return is;
 	}
 
 }
