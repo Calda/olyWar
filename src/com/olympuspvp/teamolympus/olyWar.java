@@ -363,7 +363,6 @@ public class olyWar extends JavaPlugin{
 			p.removePotionEffect(pe.getType());
 		}if(olyWar.mapType == "TDM"){
 			final int life = getLives(p) - 1;
-			System.out.println(life);
 			setLives(p, life);
 			if(life == 0){
 				clearLives(p);
@@ -485,8 +484,6 @@ public class olyWar extends JavaPlugin{
 			p.teleport(blueSpawn, TeleportCause.PLUGIN);
 			p.getInventory().setHelmet(new ItemStack(Material.LAPIS_BLOCK));
 			p.sendMessage(map + "You have spawned as " + ct.getArticle() + " " + t.getColor() + ct.getName());
-		}else if(t != Team.NONE){
-			olyWar.setLives(p, 3);
 		}
 	}
 

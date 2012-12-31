@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import com.olympuspvp.teamolympus.olyWar;
 import com.olympuspvp.teamolympus.scheduler.ADbeat;
 
@@ -90,15 +89,11 @@ public class MotionListener implements Listener{
 							this.cachedMapNameBlueSetup = olyWar.mapName;
 						}if(tpTo != null){
 							p.teleport(tpTo.getRelative(BlockFace.UP).getLocation());
-							p.sendMessage(olyWar.map + "You cannot enter " + ChatColor.BLUE+ "Blue's spawn");
+							p.sendMessage(olyWar.map + "You cannot leave your spawn before setup is over.");
 						}
 					}
 				}
 			}
 		}
-	}@EventHandler
-	public void onTeleport(PlayerTeleportEvent e){
-		//olyWar.dcAPI.disguisePlayer(e.getPlayer(), new Disguise(olyWar.dcAPI.newEntityID(), e.getPlayer().getName(), null));
-		//olyWar.dcAPI.undisguisePlayer(e.getPlayer());
 	}
 }

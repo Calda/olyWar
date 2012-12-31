@@ -18,10 +18,7 @@ public class Heartbeat {
 					final Player[] players = Bukkit.getOnlinePlayers();
 					if(players.length > 0){
 						for(final Player p : players){
-							if(olyWar.getClass(p) == ClassType.PALADIN){
-								final int health = p.getHealth();
-								if(health != ClassType.PALADIN.getMaxHealth()) p.setHealth(health+1);
-							}if(olyWar.getClass(p) == ClassType.ASSASSIN){
+						    if(olyWar.getClass(p) == ClassType.ASSASSIN){
 								if(olyWar.isInvisible(p)){
 									final int mana = p.getFoodLevel();
 									if(mana != 0) p.setFoodLevel(mana - 1);
@@ -39,6 +36,7 @@ public class Heartbeat {
 				}
 			}
 		}, 15L, 15L);
+		
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(ow, new Runnable(){
 			@Override
 			public void run(){
@@ -46,6 +44,24 @@ public class Heartbeat {
 			}
 		}, 1L,1L);
 
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(ow, new Runnable(){
+
+			@Override
+			public void run(){
+				if(olyWar.gameIsActive){
+					final Player[] players = Bukkit.getOnlinePlayers();
+					if(players.length > 0){
+						for(final Player p : players){
+							if(olyWar.getClass(p) == ClassType.PALADIN){
+								final int health = p.getHealth();
+								if(health != ClassType.PALADIN.getMaxHealth()) p.setHealth(health+1);
+							}
+						}
+					}
+				}
+			}
+		}, 30L, 30L);
+		
 	}
 
 }

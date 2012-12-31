@@ -30,13 +30,12 @@ public class PortalInteract implements Listener{
 		final Block up = b.getRelative(BlockFace.UP);
 		final String name = olyWar.getName(p);
 		if(olyWar.gameIsActive){
-			if(b.getType() == Material.PORTAL && up.getType() == Material.AIR){
+			if(b.getType() == Material.PORTAL && up.getType() == Material.AIR && up.getRelative(BlockFace.UP).getType() == Material.AIR){
 				if(olyWar.getTeam(p) == Team.RED) b.setType(Material.NETHERRACK);
 				else if(olyWar.getTeam(p) == Team.BLUE) b.setType(Material.LAPIS_BLOCK);
 				up.setTypeId(1,false);
 				up.setTypeId(90,false);
 				if(!allPortals.containsKey(name)){
-					System.out.println("Assing portal 1");
 					final Portals portals = new Portals();
 					portals.set(1, up.getLocation());
 					allPortals.put(name, portals);
@@ -64,7 +63,10 @@ public class PortalInteract implements Listener{
 					}
 					//}
 				}
-			}else e.setCancelled(true);
+			}else{ 
+				e.setCancelled(true);
+				e.getPlayer().sendMessage(portalTag + "You cannot place a portal here. There must be two blocks of space above the portal.");
+			}
 		}else if(!p.isOp()) e.setCancelled(true);
 	}
 
@@ -105,6 +107,7 @@ public class PortalInteract implements Listener{
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void deletePortals(final Player p){
 		final String name = olyWar.getName(p);
 		if(!allPortals.containsKey(name) && olyWar.getClass(p) == ClassType.INFILTRATOR) p.sendMessage(olyWar.getLogo() + ChatColor.GOLD + "You do not have any placed portals!");
@@ -113,6 +116,7 @@ public class PortalInteract implements Listener{
 			allPortals.remove(name);
 			p.getInventory().setItem(1, new ItemStack(Material.PORTAL, 1));
 			p.getInventory().setItem(2, new ItemStack(Material.PORTAL, 1));
+			p.updateInventory();
 			if(portals.get(1) != null){
 				portals.get(1).getBlock().setTypeId(0);
 				portals.get(1).getBlock().getRelative(BlockFace.DOWN).setTypeId(0);
@@ -142,7 +146,7 @@ public class PortalInteract implements Listener{
 
 	public static void punchPortal(final Player p, final Block portal){
 		final String owner = getOwnerOfPortal(portal);
-		final Player ownerp = Bukkit.getPlayerExact(owner);
+		final Player ownerp = Bukkit.getPlayer(owner);
 		final Team t = olyWar.getTeam(ownerp);
 		if(owner != null && t != null){
 			if(t != olyWar.getTeam(p)){

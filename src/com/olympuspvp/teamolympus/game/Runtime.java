@@ -67,14 +67,16 @@ public class Runtime{
 			final String mt = mapType;
 			final String mn = mapName;
 			Vote.openVote();
-			s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mapType + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mapName + ChatColor.GOLD + " in 30 seconds.");
+			s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mapType + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mapName + ChatColor.GOLD + " in 60 seconds.");
 			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");
+			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 30 seconds.");
+			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");}}, 30*20L);
 			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 20 seconds.");
-			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");}}, 10*20L);
+			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");}}, 40*20L);
 			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 10 seconds.");
-			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");}}, 20*20L);
+			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");}}, 50*20L);
 			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){@Override public void run(){s.broadcastMessage(map + "Next map is " + ChatColor.GREEN + mt + ChatColor.GOLD + " on " + ChatColor.DARK_GREEN + mn + ChatColor.GOLD + " in 5 seconds.");
-			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");}}, 25*20L);
+			s.broadcastMessage(map + "Use the command" + ChatColor.YELLOW + " /vote [yes/no/results] " + ChatColor.GOLD + "to vote!");}}, 55*20L);
 			s.getScheduler().scheduleSyncDelayedTask(ow, new Runnable(){
 				@Override
 				public void run(){

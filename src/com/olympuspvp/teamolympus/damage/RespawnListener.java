@@ -66,11 +66,11 @@ public class RespawnListener implements Listener{
 				difference = red - blue;
 				higher = Team.RED;
 			}else if(blue > red){
-				difference = blue - red;
-				higher = Team.BLUE;
-			}if(difference > 1){
-				if(t == higher){
-					t = higher.getOpposite();
+				difference = blue - red; //FUUUUUUUUUUCK YOU NIGGERS
+				higher = Team.BLUE;//I HATE JACK SO MUCH
+			}if(difference > 1){//WHAT A FAGGOT
+				if(t == higher){//EH EH EH ERRRR
+					t = higher.getOpposite();//FUQ YOU GUIZ
 					olyWar.setTeam(p, t);
 					p.sendMessage(olyWar.map + "You have been autobalanced to " + t.getTeamName());
 				}
